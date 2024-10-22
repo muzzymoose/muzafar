@@ -11,18 +11,24 @@
             margin: 0;
             padding: 20px;
         }
-        .container {
+        h2 {
+            color: #333;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .project-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-between;
         }
         .card {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 20px;
-            width: calc(33% - 40px);
+            width: calc(30% - 40px);
             overflow: hidden;
             transition: all 0.3s ease;
         }
@@ -66,51 +72,58 @@
     </style>
 </head>
 <body>
-    <h2>Project Portfolio</h2>
-    <div class="container">
-        <div class="card">
-            <img src="img/img03.jpg" alt="Project Image">
-            <div class="card-content">
-                <h3>Flight Delays & Cancellations</h3>
-                <p>ETL pipeline in AWS that builds analytical tables for US air transport analysts.</p>
-                <div class="tags">
-                    <div class="tag">Python</div>
-                    <div class="tag">SQL</div>
-                    <div class="tag">Data Engineering</div>
+    <!-- Main header and other content will go here -->
+    <!-- Now let's add the project portfolio under h2 -->
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <h2>Latest Projects</h2>
+        <div class="project-container">
+            <!-- Project 1 -->
+            <div class="card">
+                <img src="img/img03.jpg" alt="Project Image">
+                <div class="card-content">
+                    <h3>Flight Delays & Cancellations</h3>
+                    <p>ETL pipeline in AWS that builds analytical tables for US air transport analysts.</p>
+                    <div class="tags">
+                        <div class="tag">Python</div>
+                        <div class="tag">SQL</div>
+                        <div class="tag">Data Engineering</div>
+                    </div>
+                    <a href="#">View More</a>
                 </div>
-                <a href="#">View More</a>
             </div>
-        </div>
 
-        <div class="card">
-            <img src="img/img-04.jpg" alt="Project Image">
-            <div class="card-content">
-                <h3>Bank Customer Churn</h3>
-                <p>Explore customer churn in Tableau using banking customer data.</p>
-                <div class="tags">
-                    <div class="tag">Tableau</div>
-                    <div class="tag">Data Visualization</div>
-                    <div class="tag">Data Analysis</div>
+            <!-- Project 2 -->
+            <div class="card">
+                <img src="img/img-04.jpg" alt="Project Image">
+                <div class="card-content">
+                    <h3>Bank Customer Churn</h3>
+                    <p>Explore customer churn in Tableau using banking customer data.</p>
+                    <div class="tags">
+                        <div class="tag">Tableau</div>
+                        <div class="tag">Data Visualization</div>
+                        <div class="tag">Data Analysis</div>
+                    </div>
+                    <a href="#">View More</a>
                 </div>
-                <a href="#">View More</a>
             </div>
-        </div>
 
-        <div class="card">
-            <img src="img/img-05.jpg" alt="Project Image">
-            <div class="card-content">
-                <h3>Plant Co. Sales Performance</h3>
-                <p>Building a performance report in Power BI to understand growth opportunities.</p>
-                <div class="tags">
-                    <div class="tag">Power BI</div>
-                    <div class="tag">Data Modeling</div>
-                    <div class="tag">Data Visualization</div>
+            <!-- Project 3 -->
+            <div class="card">
+                <img src="img/img-05.jpg" alt="Project Image">
+                <div class="card-content">
+                    <h3>Plant Co. Sales Performance</h3>
+                    <p>Building a performance report in Power BI to understand growth opportunities.</p>
+                    <div class="tags">
+                        <div class="tag">Power BI</div>
+                        <div class="tag">Data Modeling</div>
+                        <div class="tag">Data Visualization</div>
+                    </div>
+                    <a href="#">View More</a>
                 </div>
-                <a href="#">View More</a>
             </div>
-        </div>
 
-        <!-- Add more cards here -->
+            <!-- Add more cards here as needed -->
+        </div>
     </div>
 </body>
 </html>
