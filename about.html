@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me - Ahmad Muzafar</title>
+    <title>About Me</title>
     <style>
+        /* CSS Variables for color management */
         :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #007BFF;
+            --primary-color: #4CAF50; /* Green */
+            --secondary-color: #007BFF; /* Blue */
             --text-color: #333;
             --background-color: #f9f9f9;
             --card-bg-color: #fff;
             --shadow-color: rgba(0, 0, 0, 0.1);
-            --highlight-color: #ff4d4f;
+            --highlight-color: #ff4d4f; /* Highlight Red */
+            --link-color: #007BFF;
+            --link-hover-color: #0056b3;
         }
 
         body {
@@ -26,59 +29,67 @@
         header {
             background-color: var(--primary-color);
             color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px;
-            text-align: center;
         }
 
-        .container {
+        .header-left h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        .header-links a:hover {
+            color: var(--highlight-color);
+        }
+
+        .content {
             max-width: 900px;
             margin: 40px auto;
-            padding: 20px;
-            background-color: var(--card-bg-color);
-            box-shadow: 0 4px 15px var(--shadow-color);
-            border-radius: 10px;
+            padding: 0 20px;
+            text-align: left;
         }
 
-        .profile-photo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .profile-photo img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-
-        h1, h2 {
-            text-align: center;
+        .content h2 {
             color: var(--primary-color);
+            font-size: 2.5em;
         }
 
-        p {
-            font-size: 1.1em;
+        .content p {
+            font-size: 1.2em;
             line-height: 1.6;
+            margin-bottom: 20px;
         }
 
-        .chronology {
-            margin-top: 30px;
+        .content a {
+            color: var(--link-color);
+            text-decoration: none;
         }
 
-        .chronology h3 {
-            color: var(--secondary-color);
-            margin-bottom: 10px;
+        .content a:hover {
+            color: var(--link-hover-color);
         }
 
-        .chronology ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .chronology ul li {
-            margin-bottom: 15px;
-            font-size: 1.1em;
+        /* Styling for the image */
+        .profile-image {
+            width: 200px; /* Adjust size as needed */
+            border-radius: 50%;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            margin-bottom: 20px;
         }
 
         .footer {
@@ -92,7 +103,7 @@
         }
 
         .footer a {
-            color: var(--secondary-color);
+            color: var(--link-color);
             text-decoration: none;
         }
 
@@ -103,39 +114,29 @@
 </head>
 <body>
     <header>
-        <h1>About Me</h1>
+        <div class="header-left">
+            <h1>About Me</h1>
+        </div>
+        <div class="header-links">
+            <a href="index.html">Main</a>
+            <a href="#">About Me</a>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="profile-photo">
-            <img src="img/profile.jpg" alt="Ahmad Muzafar Photo">
-        </div>
+    <div class="content">
+        <!-- Add your photo here -->
+        <img src="img/about.jpg" alt="Ahmad Muzafar" class="profile-image">
 
         <h2>Ahmad Muzafar</h2>
         <p>
-            Hello! I’m Ahmad Muzafar, a former Process Engineer turned Data Scientist with a passion for turning data into actionable insights. 
-            With a strong foundation in engineering, I transitioned into data science to leverage my analytical skills in solving complex problems 
-            and uncovering valuable trends hidden in data. I enjoy learning continuously and love the challenge of combining technical expertise 
-            with business acumen to deliver real-world impact.
+            Hi, I’m Ahmad Muzafar, a data enthusiast transitioning from a Process Engineer to a Data Scientist. Over the past 9 years, I’ve developed a deep passion for data analytics, automation, and machine learning. My journey started in engineering, where I led projects involving process improvements and data-driven decision-making. Eventually, I realized my true interest was in the transformative power of data.
         </p>
-
-        <div class="chronology">
-            <h3>Chronology</h3>
-            <ul>
-                <li><strong>2013:</strong> Graduated from <strong>Loughborough University</strong> with a degree in Chemical Engineering.</li>
-                <li><strong>2013 - 2023:</strong> Worked as a <strong>Process Engineer</strong> at ShinEtsu Handotai Sdn Bhd, 
-                    where I designed, developed, and installed multimillion-dollar unit operations, and created 
-                    tools that improved process efficiency and troubleshooting time by 90%.</li>
-                <li><strong>2023:</strong> Decided to shift career to Data Science after realizing my passion for solving problems 
-                    through data. Resigned from my engineering role and enrolled in various data science courses to upskill in 
-                    data analysis, machine learning, and data engineering.</li>
-                <li><strong>2024:</strong> Completed a <strong>Data Science Bootcamp</strong> by Adnexio, where I was one of the top 5 graduates. 
-                    I also earned my <strong>Associate Data Analyst certification</strong> from DataCamp and completed multiple projects 
-                    involving machine learning, data visualization, and database management.</li>
-                <li><strong>Present:</strong> Currently working on a project for <strong>International Essentials</strong> involving customer loyalty program analysis, 
-                    and preparing for new opportunities in the field of Data Science.</li>
-            </ul>
-        </div>
+        <p>
+            I’ve recently completed several certifications, including the Google Data Analytics Professional Certificate and a Python Bootcamp, and I’ve worked on various data science projects involving customer segmentation, employee attrition prediction, and more. My key skills include data manipulation, statistical analysis, and model development in Python.
+        </p>
+        <p>
+            Feel free to explore my <a href="https://github.com/muzzymoose">GitHub portfolio</a> to see some of the projects I’ve been working on!
+        </p>
     </div>
 
     <div class="footer">
