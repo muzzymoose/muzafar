@@ -3,127 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Showcase</title>
+    <title>Project Portfolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0f8ff;
             margin: 0;
             padding: 20px;
         }
-        h2 {
-            color: #333;
-            text-align: left;
-            margin-bottom: 20px;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .header-left h1 {
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+        .header-links {
+            display: flex;
+            gap: 10px;
+        }
+        .header-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 1.1em;
         }
         .project-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .card {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            width: calc(30% - 40px);
-            overflow: hidden;
-            transition: all 0.3s ease;
+            width: 48%;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
         }
         .card img {
             width: 100%;
             height: auto;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
         .card-content {
             padding: 15px;
         }
-        .card-content h3 {
-            margin: 0;
+        .card h3 {
             font-size: 1.2em;
-            color: #333;
+            margin: 0;
+            margin-bottom: 10px;
         }
-        .card-content p {
-            margin: 10px 0;
+        .card p {
             font-size: 0.9em;
-            color: #777;
+            color: #555;
+            margin-bottom: 10px;
         }
         .tags {
             display: flex;
             flex-wrap: wrap;
+            gap: 5px;
         }
         .tag {
-            background-color: #eee;
+            background-color: #f1f1f1;
+            padding: 5px 10px;
             border-radius: 3px;
-            padding: 5px;
-            margin: 5px;
             font-size: 0.8em;
+            color: #555;
         }
-        .card a {
-            text-decoration: none;
-            color: #007BFF;
+        .new-tag {
             font-weight: bold;
+            color: red;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+        .project-links {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .project-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
-    <!-- Main header and other content will go here -->
-    <!-- Now let's add the project portfolio under h2 -->
-    <div class="container-fluid tm-container-content tm-mt-60">
-        <h2>Latest Projects</h2>
-        <div class="project-container">
-            <!-- Project 1 -->
-            <div class="card">
-                <img src="img/img03.jpg" alt="Project Image">
-                <div class="card-content">
-                    <h3>Flight Delays & Cancellations</h3>
-                    <p>ETL pipeline in AWS that builds analytical tables for US air transport analysts.</p>
-                    <div class="tags">
-                        <div class="tag">Python</div>
-                        <div class="tag">SQL</div>
-                        <div class="tag">Data Engineering</div>
-                    </div>
-                    <a href="#">View More</a>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="card">
-                <img src="img/img-04.jpg" alt="Project Image">
-                <div class="card-content">
-                    <h3>Bank Customer Churn</h3>
-                    <p>Explore customer churn in Tableau using banking customer data.</p>
-                    <div class="tags">
-                        <div class="tag">Tableau</div>
-                        <div class="tag">Data Visualization</div>
-                        <div class="tag">Data Analysis</div>
-                    </div>
-                    <a href="#">View More</a>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="card">
-                <img src="img/img-05.jpg" alt="Project Image">
-                <div class="card-content">
-                    <h3>Plant Co. Sales Performance</h3>
-                    <p>Building a performance report in Power BI to understand growth opportunities.</p>
-                    <div class="tags">
-                        <div class="tag">Power BI</div>
-                        <div class="tag">Data Modeling</div>
-                        <div class="tag">Data Visualization</div>
-                    </div>
-                    <a href="#">View More</a>
-                </div>
-            </div>
-
-            <!-- Add more cards here as needed -->
+    <header>
+        <div class="header-left">
+            <h1>Pick a project</h1>
         </div>
+        <div class="header-links">
+            <a href="#">Main</a>
+            <a href="#">Table</a>
+            <a href="#">Tool</a>
+            <a href="#">List</a>
+        </div>
+    </header>
+
+    <div class="project-container">
+        <!-- Project 1 -->
+        <div class="card">
+            <img src="img/flight.jpg" alt="Flight Delays Project">
+            <div class="card-content">
+                <h3>Flight Delays & Cancellations - ETL Pipeline Build in AWS</h3>
+                <p>Creating an ETL pipeline in AWS that builds analytical tables for US air transport analysts with a focus on US domestic air travel.</p>
+                <div class="tags">
+                    <div class="tag">Amazon Redshift</div>
+                    <div class="tag">Python</div>
+                    <div class="tag">PySpark</div>
+                    <div class="tag">SQL</div>
+                    <div class="tag">Data Cleaning</div>
+                    <div class="tag">Data Transformation</div>
+                    <div class="tag">Data Modelling</div>
+                    <div class="tag">Data Engineering</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="card">
+            <img src="img/bank.jpg" alt="Bank Customer Churn">
+            <div class="card-content">
+                <h3>Bank Customer Churn</h3>
+                <p>Explore customer churn in Tableau using banking customer data.</p>
+                <div class="tags">
+                    <div class="tag">Tableau</div>
+                    <div class="tag">Data Analysis</div>
+                    <div class="tag">Data Visualization</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="card">
+            <img src="img/coffee.jpg" alt="Coffee Sales Dashboard">
+            <div class="card-content">
+                <h3>Coffee Sales Dashboard</h3>
+                <p>Building an interactive Microsoft Excel dashboard to allow the users to quickly identify trends in coffee bean sales.</p>
+                <div class="tags">
+                    <div class="tag">Microsoft Excel</div>
+                    <div class="tag">Data Transformation</div>
+                    <div class="tag">Data Visualization</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="card">
+            <img src="img/plant.jpg" alt="Plant Co. Sales Performance">
+            <div class="card-content">
+                <h3>Plant Co. Sales Performance</h3>
+                <p>Building a condensed, dynamic performance report in Power BI to understand the pain points or opportunities for growth of a company.</p>
+                <div class="tags">
+                    <div class="tag">Power BI</div>
+                    <div class="tag">Power Query</div>
+                    <div class="tag">Data Cleaning</div>
+                    <div class="tag">Data Transformation</div>
+                    <div class="tag">Data Visualization</div>
+                    <div class="tag">Data Analysis</div>
+                    <div class="tag">Data Modelling</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="card">
+            <img src="img/airbnb.jpg" alt="Airbnb Prices">
+            <div class="card-content">
+                <h3>Analyzing Airbnb Prices with Window Functions</h3>
+                <p>This project covers the use of window functions in SQL to extract insights from a dataset of Airbnb listings in New York City.</p>
+                <div class="tags">
+                    <div class="tag">SQL</div>
+                    <div class="tag">Data Transformation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        You'll get the projects that landed me multiple interviews
     </div>
 </body>
 </html>
