@@ -5,106 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Portfolio</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            margin: 0;
-            padding: 20px;
+        /* CSS Variables for color management */
+        :root {
+            --primary-color: #4CAF50; /* Green */
+            --secondary-color: #007BFF; /* Blue */
+            --text-color: #333;
+            --background-color: #f9f9f9;
+            --card-bg-color: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --highlight-color: #ff4d4f; /* Highlight Red */
+            --link-color: #007BFF;
+            --link-hover-color: #0056b3;
         }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
         header {
+            background-color: var(--primary-color);
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
         }
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
+
         .header-left h1 {
-            font-size: 1.5em;
-            margin-right: 20px;
+            font-size: 2em;
+            margin: 0;
         }
+
         .header-links {
             display: flex;
-            gap: 10px;
+            gap: 20px;
         }
+
         .header-links a {
             text-decoration: none;
-            color: #007bff;
+            color: white;
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            transition: color 0.3s;
         }
+
+        .header-links a:hover {
+            color: var(--highlight-color);
+        }
+
         .project-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 40px auto;
+            gap: 20px;
         }
+
         .card {
-            background-color: white;
+            background-color: var(--card-bg-color);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 48%;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            width: calc(50% - 10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .card:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 20px var(--shadow-color);
         }
+
         .card img {
             width: 100%;
             height: auto;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
+
         .card-content {
-            padding: 15px;
+            padding: 20px;
         }
+
         .card h3 {
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin: 0;
-            margin-bottom: 10px;
+            color: var(--primary-color);
         }
+
         .card p {
-            font-size: 0.9em;
-            color: #555;
-            margin-bottom: 10px;
+            font-size: 1em;
+            color: var(--text-color);
+            margin: 10px 0;
         }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 10px;
+            margin-top: 10px;
         }
+
         .tag {
-            background-color: #f1f1f1;
-            padding: 5px 10px;
-            border-radius: 3px;
-            font-size: 0.8em;
-            color: #555;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
         }
+
         .new-tag {
+            background-color: var(--highlight-color);
             font-weight: bold;
-            color: red;
         }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #333;
-        }
+
         .project-links {
             margin: 10px 0;
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
         }
+
         .project-links a {
             text-decoration: none;
-            color: #007bff;
+            color: var(--link-color);
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .project-links a:hover {
+            color: var(--link-hover-color);
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
             font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .footer a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--highlight-color);
         }
     </style>
 </head>
@@ -124,10 +176,12 @@
     <div class="project-container">
         <!-- Project 1 -->
         <div class="card">
-             <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Customer%20Segmentation%20KMeans%20Cluster"><img src="img/img03.jpg" alt="Customer Segmentation"></a>
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Customer%20Segmentation%20KMeans%20Cluster">
+                <img src="img/img03.jpg" alt="Customer Segmentation">
+            </a>
             <div class="card-content">
                 <h3>Customer Segmentation using KMeans Clustering</h3>
-                <p>Creating clusters based on a UK retailer's customers spending behavior using Recency, Value and Frequency Analysis.</p>
+                <p>Creating clusters based on a UK retailer's customers spending behavior using Recency, Value, and Frequency Analysis.</p>
                 <div class="tags">
                     <div class="tag">RVF Analysis</div>
                     <div class="tag">Python</div>
@@ -140,16 +194,17 @@
 
         <!-- Project 2 -->
         <div class="card">
-             <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Prediction%20on%20Company%20Attrition%20Rate"><img src="img/img02.jpg" alt="Company Attrition"></a>
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Prediction%20on%20Company%20Attrition%20Rate">
+                <img src="img/img02.jpg" alt="Company Attrition">
+            </a>
             <div class="card-content">
                 <h3>Employee Attrition Prediction</h3>
-                <p>Explore eomployee churn rate based on company's employee data. Creating a robust model to predict future churns.</p>
+                <p>Explore employee churn rate based on company's employee data. Creating a robust model to predict future churns.</p>
                 <div class="tags">
                     <div class="tag">SQL</div>
                     <div class="tag">Python</div>
                     <div class="tag">Data Visualization</div>
                     <div class="tag">Data Modelling</div>
-                    <div class="tag">Exploratory Data Analysis</div>
                     <div class="tag">Machine Learning</div>
                 </div>
             </div>
@@ -157,32 +212,31 @@
 
         <!-- Project 3 -->
         <div class="card">
-            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/My%20framework/Import%20CSV%20to%20PostgreSQL"><img src="img/bikestoresql.png" alt="Relational Database SQL"></a>
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/My%20framework/Import%20CSV%20to%20PostgreSQL">
+                <img src="img/bikestoresql.png" alt="Relational Database SQL">
+            </a>
             <div class="card-content">
                 <h3>Relational Database Creation PostgreSQL</h3>
                 <p>Building PostgreSQL relational database for a bike store using python scripts.</p>
                 <div class="tags">
                     <div class="tag">Python</div>
                     <div class="tag">PostgreSQL</div>
-                    <div class="tag">Data Analysis</div>
                     <div class="tag">Data Engineering</div>
+                    <div class="tag">Data Analysis</div>
                 </div>
             </div>
         </div>
 
         <!-- Project 4 -->
         <div class="card">
-            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/EDA%20%26%20ML%20predictions%20on%20Medical%20Cost%20Billed%20by%20Health%20Insurance"><img src="img/powerbi.png" alt="Medical Bill Insurance Prediction"></a>
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/EDA%20%26%20ML%20predictions%20on%20Medical%20Cost%20Billed%20by%20Health%20Insurance">
+                <img src="img/powerbi.png" alt="Medical Bill Insurance Prediction">
+            </a>
             <div class="card-content">
                 <h3>Medical Bill Insurance Prediction and Dashboard</h3>
-                <p>Building a condensed, dynamic report in Power BI to understand the medical bills insured by an insurance company based on clients demographics. Creating a robust model to predict bill cost for future clients.</p>
+                <p>Building a dynamic Power BI report to understand medical bills insured by a company, based on client demographics. Creating a robust model to predict future bills.</p>
                 <div class="tags">
                     <div class="tag">Power BI</div>
-                    <div class="tag">Power Query</div>
-                    <div class="tag">Data Cleaning</div>
-                    <div class="tag">Data Transformation</div>
-                    <div class="tag">Data Visualization</div>
-                    <div class="tag">Data Analysis</div>
                     <div class="tag">Data Modelling</div>
                     <div class="tag">Python</div>
                 </div>
@@ -191,14 +245,14 @@
 
         <!-- Project 5 -->
         <div class="card">
-            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Deep%20EDA%20on%20Pizza%20Restaurant%20Sales"><img src="img/airbnb.jpg" alt="Pizza Sales"></a>
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Deep%20EDA%20on%20Pizza%20Restaurant%20Sales">
+                <img src="https://nmgprod.s3.amazonaws.com/media/files/8a/59/8a590815f030256aeed1ef2d0fed123e/cover_image_1638475388.jpg" alt="Pizza Sales">
+            </a>
             <div class="card-content">
                 <h3>Analyzing an Italian Restaurant Pizza Sales</h3>
-                <p>This project covers the use of various data visualization to help pizza restaurant manager answer his questions regarding his pizza sales.</p>
+                <p>Using data visualization to help a pizza restaurant manager answer key questions about pizza sales.</p>
                 <div class="tags">
                     <div class="tag">Exploratory Data Analysis</div>
-                    <div class="tag">Data Transformation</div>
-                    <div class="tag">Data Manipulation</div>
                     <div class="tag">Data Visualization</div>
                     <div class="tag">Python</div>
                 </div>
@@ -207,7 +261,7 @@
     </div>
 
     <div class="footer">
-        ... my <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/"> alt="LinkedIN profile"></a>
+        <p>Crafted by <a href="https://github.com/muzzymoose">Muzzy Moose</a></p>
     </div>
 </body>
 </html>
