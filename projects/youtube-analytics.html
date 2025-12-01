@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Analytics & Sentiment Analysis - Muzafar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+            padding-top: 80px;
+        }
+
+        /* ========================================
+           NAVIGATION BAR
+           Same as main page
+           ======================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #e0e0e0;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #1a1a1a;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Back Link - Removed as we have nav now */
+
+        /* Hero */
+        .project-hero {
+            padding: 80px 0 60px;
+        }
+
+        .project-number {
+            font-size: 1rem;
+            color: #999;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 30px 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        .meta-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.01em;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: #1a1a1a;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 12px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: #f8f8f8;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 4px solid #1a1a1a;
+        }
+
+        .highlight p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #1a1a1a;
+        }
+
+        .highlight strong {
+            font-weight: 700;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            padding: 8px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .github-link {
+            display: inline-block;
+            background: #1a1a1a;
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .github-link:hover {
+            background: #333;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .nav-container {
+                padding: 15px 20px;
+                position: relative;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-divider {
+                display: none;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .highlight {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION BAR
+         Same navigation as main page
+         ======================================== -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links" id="navLinks">
+                <!-- Internal page links -->
+                <a href="../index.html#home">Home</a>
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#certificates">Certificates</a>
+                
+                <!-- Divider -->
+                <div class="nav-divider"></div>
+                
+                <!-- External links - EDIT THESE URLs -->
+                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
+                <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
+                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="project-hero">
+            <div class="project-number">Project 01</div>
+            <h1>YouTube Analytics & Sentiment Analysis</h1>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Data Analyst</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">3 Months</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Year</div>
+                    <div class="meta-value">2024</div>
+                </div>
+            </div>
+
+            <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">NLP</span>
+                <span class="tag">Web Scraping</span>
+                <span class="tag">Sentiment Analysis</span>
+                <span class="tag">Machine Learning</span>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>This project involves comprehensive data analysis of Ali Abdaal's YouTube channel, one of the most popular productivity-focused content creators. The goal was to uncover patterns between video performance metrics and apply natural language processing to understand audience sentiment in the comment sections.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">500+</div>
+                    <div class="stat-label">Videos Analyzed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50K+</div>
+                    <div class="stat-label">Comments Processed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">92%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>The Challenge</h2>
+            <p>Content creators struggle to understand what drives engagement and how their audience truly feels about their content. While YouTube provides basic metrics like views and likes, there's limited insight into the sentiment and quality of audience interactions.</p>
+            <p>The challenge was to build a comprehensive analysis framework that could extract meaningful patterns from both quantitative engagement metrics and qualitative comment data.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Approach</h2>
+            
+            <h3>Data Collection</h3>
+            <p>I used the YouTube Data API v3 combined with custom web scraping scripts to gather comprehensive channel data including video metadata, engagement metrics, and complete comment threads with timestamps.</p>
+
+            <h3>Statistical Analysis</h3>
+            <p>Performed exploratory data analysis to identify patterns in:</p>
+            <ul>
+                <li>Like-to-view ratio across different content types</li>
+                <li>Engagement trends over time and optimal posting schedules</li>
+                <li>Correlation between video length and viewer retention</li>
+                <li>Peak performance factors and content characteristics</li>
+            </ul>
+
+            <h3>Natural Language Processing</h3>
+            <p>Implemented a multi-layered sentiment analysis approach using VADER and TextBlob for initial sentiment classification, followed by custom model training for hate speech detection. The pipeline included text preprocessing, TF-IDF vectorization, and classification using ensemble methods.</p>
+
+            <div class="highlight">
+                <p><strong>Key Insight:</strong> Videos with higher like-to-view ratios (above 5%) consistently showed more positive sentiment in comments, indicating strong audience alignment with content.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Results</h2>
+            <p>The analysis revealed several actionable insights that could significantly impact content strategy:</p>
+            <ul>
+                <li>Videos posted on Sunday mornings received 23% higher engagement on average</li>
+                <li>Tutorial-style content generated the most positive sentiment at 87%</li>
+                <li>The sentiment model successfully flagged toxic comments with 92% accuracy</li>
+                <li>Identified optimal video length sweet spot of 12-15 minutes for maximum retention</li>
+                <li>Discovered correlation between specific thumbnail styles and viewer sentiment</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Business Impact:</strong> These insights enable content creators to optimize posting schedules, content format, and community management strategies to maximize audience engagement while maintaining a positive community environment.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Tools & Technologies</h2>
+            <ul>
+                <li><strong>Python:</strong> Primary programming language for all analysis</li>
+                <li><strong>Data Processing:</strong> Pandas, NumPy for data manipulation</li>
+                <li><strong>Visualization:</strong> Matplotlib, Seaborn, Plotly for insights presentation</li>
+                <li><strong>NLP:</strong> NLTK, TextBlob, VADER for sentiment analysis</li>
+                <li><strong>Web Scraping:</strong> BeautifulSoup, Selenium, YouTube Data API</li>
+                <li><strong>Machine Learning:</strong> Scikit-learn for classification models</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Next Steps</h2>
+            <p>Future enhancements could include:</p>
+            <ul>
+                <li>Real-time monitoring dashboard for ongoing sentiment tracking</li>
+                <li>Comparative analysis across multiple channels in the same niche</li>
+                <li>Implementation of transformer-based models like BERT for more nuanced sentiment understanding</li>
+                <li>Automated content recommendation system based on historical performance patterns</li>
+            </ul>
+        </section>
+
+        <section class="cta-section">
+            <a href="#" class="github-link">View Project on GitHub</a>
+        </section>
+
+        <footer>
+            <p>© 2024 Muzafar</p>
+        </footer>
+    </div>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
