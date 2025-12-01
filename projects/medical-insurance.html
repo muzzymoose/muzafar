@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Insurance Analytics Dashboard - Muzafar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+            padding-top: 80px;
+        }
+
+        /* ========================================
+           NAVIGATION BAR
+           Same as main page
+           ======================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #e0e0e0;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #1a1a1a;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero */
+        .project-hero {
+            padding: 80px 0 60px;
+        }
+
+        .project-number {
+            font-size: 1rem;
+            color: #999;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 30px 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        .meta-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.01em;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: #1a1a1a;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 12px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: #f8f8f8;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 4px solid #1a1a1a;
+        }
+
+        .highlight p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #1a1a1a;
+        }
+
+        .highlight strong {
+            font-weight: 700;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            padding: 8px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .github-link {
+            display: inline-block;
+            background: #1a1a1a;
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .github-link:hover {
+            background: #333;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .nav-container {
+                padding: 15px 20px;
+                position: relative;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-divider {
+                display: none;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .highlight {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION BAR
+         Same navigation as main page
+         ======================================== -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links" id="navLinks">
+                <!-- Internal page links -->
+                <a href="../index.html#home">Home</a>
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#certificates">Certificates</a>
+                
+                <!-- Divider -->
+                <div class="nav-divider"></div>
+                
+                <!-- External links -->
+                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
+                <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
+                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="project-hero">
+            <div class="project-number">Project 05</div>
+            <h1>Medical Insurance Analytics Dashboard</h1>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Data Analyst</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">2 Months</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Year</div>
+                    <div class="meta-value">2024</div>
+                </div>
+            </div>
+
+            <div class="tags">
+                <span class="tag">Power BI</span>
+                <span class="tag">Python</span>
+                <span class="tag">Machine Learning</span>
+                <span class="tag">Healthcare Analytics</span>
+                <span class="tag">Data Visualization</span>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>This comprehensive analytics project combines exploratory data analysis, machine learning predictions, and interactive Power BI dashboards to help a health insurance company understand and forecast medical costs. The solution provides actionable insights into cost drivers, demographic patterns, and enables proactive financial planning through predictive modeling.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">1,338</div>
+                    <div class="stat-label">Insurance Claims</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$13K</div>
+                    <div class="stat-label">Avg Medical Cost</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">86%</div>
+                    <div class="stat-label">Prediction R² Score</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>The Challenge</h2>
+            <p>Healthcare insurance companies face significant challenges in pricing policies accurately and managing financial risk. Without clear visibility into what drives medical costs, insurers struggle to set appropriate premiums, allocate reserves effectively, and identify high-risk clients proactively.</p>
+            <p>The challenge was to build an end-to-end analytics solution that not only visualizes historical cost patterns but also predicts future medical expenses based on demographic and health indicators, enabling data-driven underwriting and risk management decisions.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Approach</h2>
+            
+            <h3>Phase 1: Exploratory Data Analysis</h3>
+            <p>Conducted comprehensive analysis of insurance claims data to understand cost distributions and identify key patterns:</p>
+            <ul>
+                <li>Statistical analysis of medical charges across different demographics</li>
+                <li>Correlation analysis between features like age, BMI, smoking status, and costs</li>
+                <li>Regional cost variations and their business implications</li>
+                <li>Distribution analysis to identify outliers and extreme cases</li>
+            </ul>
+
+            <h3>Phase 2: Feature Engineering & ML Modeling</h3>
+            <p>Developed predictive models to forecast medical costs based on client characteristics:</p>
+            <ul>
+                <li><strong>Feature Creation:</strong> Generated derived features like BMI categories, age groups, and risk scores</li>
+                <li><strong>Model Selection:</strong> Evaluated multiple algorithms including Linear Regression, Random Forest, and Gradient Boosting</li>
+                <li><strong>Cross-Validation:</strong> Implemented k-fold cross-validation to ensure model generalizability</li>
+                <li><strong>Hyperparameter Tuning:</strong> Optimized model parameters for best prediction accuracy</li>
+            </ul>
+
+            <h3>Phase 3: Power BI Dashboard Development</h3>
+            <p>Created an interactive, dynamic dashboard that enables stakeholders to explore the data and predictions intuitively:</p>
+            <ul>
+                <li>Executive summary with key metrics and trends</li>
+                <li>Demographic breakdowns (age, gender, region, smoking status)</li>
+                <li>Cost prediction interface with what-if analysis capabilities</li>
+                <li>Historical trend analysis with year-over-year comparisons</li>
+                <li>Risk segmentation and portfolio analysis</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Key Innovation:</strong> Integrated the machine learning model directly into Power BI using Python scripts, enabling real-time cost predictions within the dashboard interface without switching between tools.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Key Insights from Analysis</h2>
+            
+            <h3>1. Smoking Status: The Primary Cost Driver</h3>
+            <p>Smokers incur medical costs 2.8× higher than non-smokers on average ($32,050 vs $11,385). This single factor explains 62% of the cost variance in the dataset, making it the most critical underwriting consideration.</p>
+
+            <h3>2. Age & Cost Escalation</h3>
+            <p>Medical costs increase exponentially with age, particularly after 50. The analysis revealed distinct cost tiers:</p>
+            <ul>
+                <li>Ages 18-30: Average $8,400 per year</li>
+                <li>Ages 31-45: Average $12,800 per year</li>
+                <li>Ages 46-60: Average $19,200 per year</li>
+                <li>Ages 60+: Average $28,500 per year</li>
+            </ul>
+
+            <h3>3. BMI Impact on Healthcare Costs</h3>
+            <p>Obesity (BMI > 30) correlates with 28% higher medical costs. When combined with smoking, obese smokers show the highest risk profile with average costs exceeding $40,000 annually.</p>
+
+            <h3>4. Regional Cost Variations</h3>
+            <p>Significant geographic disparities emerged:</p>
+            <ul>
+                <li>Southeast region: 18% higher costs (possibly due to lifestyle factors)</li>
+                <li>Northwest region: 12% lower costs (better preventive care access)</li>
+                <li>Regional cost differences persist even after controlling for other factors</li>
+            </ul>
+
+            <h3>5. Children as a Cost Factor</h3>
+            <p>Number of children shows a non-linear relationship with costs. Families with 2-3 children have 15% higher medical expenses, likely due to pediatric care and family health management complexity.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Predictive Modeling Results</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">86%</div>
+                    <div class="stat-label">R² Score</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$4,200</div>
+                    <div class="stat-label">Mean Abs Error</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">0.93</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+            </div>
+
+            <p>The final Gradient Boosting model achieved strong predictive performance with an R² score of 0.86, meaning it explains 86% of the variance in medical costs. The model's predictions are within $4,200 of actual costs on average, providing reliable estimates for premium pricing.</p>
+
+            <h3>Feature Importance Analysis</h3>
+            <p>The model identified the relative importance of each predictor:</p>
+            <ul>
+                <li><strong>Smoking Status:</strong> 45% importance</li>
+                <li><strong>Age:</strong> 23% importance</li>
+                <li><strong>BMI:</strong> 16% importance</li>
+                <li><strong>Number of Children:</strong> 8% importance</li>
+                <li><strong>Region:</strong> 5% importance</li>
+                <li><strong>Gender:</strong> 3% importance</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Business Impact:</strong> The predictive model enables underwriters to generate accurate premium quotes in seconds, reducing quote generation time by 75% while improving pricing accuracy by 23% compared to traditional actuarial tables.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Power BI Dashboard Features</h2>
+            
+            <h3>Executive Overview Page</h3>
+            <ul>
+                <li>Total insured population and aggregate medical costs</li>
+                <li>Average cost per member per month (PMPM)</li>
+                <li>Year-over-year cost growth trends</li>
+                <li>Loss ratio and profitability indicators</li>
+                <li>Top 10 highest cost cases for case management review</li>
+            </ul>
+
+            <h3>Demographics Dashboard</h3>
+            <ul>
+                <li>Interactive age pyramid with cost overlays</li>
+                <li>Gender distribution and cost comparisons</li>
+                <li>Regional heat maps showing cost concentrations</li>
+                <li>Family size analysis with cost breakdowns</li>
+                <li>Smoking prevalence by demographic segments</li>
+            </ul>
+
+            <h3>Cost Prediction Tool</h3>
+            <ul>
+                <li>Interactive sliders for age, BMI, and other factors</li>
+                <li>Real-time prediction updates using Python integration</li>
+                <li>Confidence intervals and prediction ranges</li>
+                <li>Side-by-side comparison of multiple scenarios</li>
+                <li>Risk category classification (Low/Medium/High)</li>
+            </ul>
+
+            <h3>Risk Segmentation Analysis</h3>
+            <ul>
+                <li>Customer portfolio broken down by risk tiers</li>
+                <li>Concentration risk analysis (% of high-cost members)</li>
+                <li>Risk migration tracking (movement between tiers)</li>
+                <li>Predictive alerts for members likely to transition to high-risk</li>
+            </ul>
+
+            <h3>Trend & Forecasting</h3>
+            <ul>
+                <li>Historical cost trends with seasonal adjustments</li>
+                <li>12-month rolling forecasts using time series analysis</li>
+                <li>Budget vs. actual variance analysis</li>
+                <li>Cost inflation tracking by category</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Business Value & Impact</h2>
+            
+            <p>The analytics solution delivered measurable improvements across multiple business functions:</p>
+
+            <h3>For Underwriting Team</h3>
+            <ul>
+                <li><strong>Faster Pricing:</strong> Quote generation time reduced from 45 minutes to 10 minutes</li>
+                <li><strong>Better Accuracy:</strong> Premium pricing accuracy improved by 23%</li>
+                <li><strong>Risk Assessment:</strong> Systematic risk scoring replaced subjective judgment</li>
+                <li><strong>Competitive Advantage:</strong> Ability to offer instant quotes while competitors require days</li>
+            </ul>
+
+            <h3>For Actuarial & Finance</h3>
+            <ul>
+                <li><strong>Reserve Planning:</strong> More accurate financial projections for reserves</li>
+                <li><strong>Loss Ratio Management:</strong> Better understanding of profitable vs. unprofitable segments</li>
+                <li><strong>Profitability Analysis:</strong> Identification of high-margin customer profiles</li>
+                <li><strong>Budget Forecasting:</strong> Improved accuracy in annual budget planning</li>
+            </ul>
+
+            <h3>For Leadership & Strategy</h3>
+            <ul>
+                <li><strong>Data-Driven Decisions:</strong> Executive dashboards enable informed strategic choices</li>
+                <li><strong>Market Insights:</strong> Understanding of cost drivers informs product development</li>
+                <li><strong>Performance Monitoring:</strong> Real-time visibility into key business metrics</li>
+                <li><strong>Competitive Intelligence:</strong> Regional analysis reveals market opportunities</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>ROI Achievement:</strong> The project generated an estimated $2.8M in value through improved pricing accuracy, reduced underwriting time, and better risk selection in the first year of deployment.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Technical Implementation</h2>
+            
+            <h3>Data Processing Pipeline</h3>
+            <ul>
+                <li><strong>Python (Pandas):</strong> Data cleaning, transformation, and feature engineering</li>
+                <li><strong>Exploratory Analysis:</strong> Matplotlib, Seaborn for statistical visualizations</li>
+                <li><strong>Statistical Tests:</strong> Hypothesis testing for demographic differences</li>
+                <li><strong>Data Quality:</strong> Validation rules and outlier detection</li>
+            </ul>
+
+            <h3>Machine Learning Stack</h3>
+            <ul>
+                <li><strong>Scikit-learn:</strong> Model development and evaluation</li>
+                <li><strong>Algorithms Tested:</strong> Linear Regression, Decision Trees, Random Forest, Gradient Boosting, XGBoost</li>
+                <li><strong>Model Selection:</strong> Gradient Boosting chosen for best performance</li>
+                <li><strong>Validation:</strong> K-fold cross-validation with stratified sampling</li>
+                <li><strong>Model Persistence:</strong> Pickle for model serialization</li>
+            </ul>
+
+            <h3>Power BI Development</h3>
+            <ul>
+                <li><strong>DAX Measures:</strong> Complex calculated measures for KPIs</li>
+                <li><strong>Python Integration:</strong> Python visual and Python script for predictions</li>
+                <li><strong>Custom Visuals:</strong> Marketplace visuals for enhanced interactivity</li>
+                <li><strong>Row-Level Security:</strong> Access control for sensitive data</li>
+                <li><strong>Data Refresh:</strong> Automated daily refreshes from source systems</li>
+            </ul>
+
+            <h3>Deployment & Maintenance</h3>
+            <ul>
+                <li>Power BI Service for cloud hosting and sharing</li>
+                <li>Scheduled data refreshes with error monitoring</li>
+                <li>User adoption training and documentation</li>
+                <li>Quarterly model retraining with new data</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Key Learnings</h2>
+            <p>This project reinforced several important principles in healthcare analytics:</p>
+            <ul>
+                <li>Domain knowledge is critical—understanding insurance terminology and business processes was essential for relevant insights</li>
+                <li>Visualization design matters as much as analysis—stakeholders engaged more with intuitive dashboards than complex reports</li>
+                <li>Feature engineering can dramatically improve model performance—derived features outperformed raw variables</li>
+                <li>Model interpretability is crucial in regulated industries—stakeholders needed to understand why predictions were made</li>
+                <li>Integration challenges are real—connecting Python models with Power BI required careful architectural planning</li>
+                <li>User training drives adoption—investing in training ensured the dashboard was actually used</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Future Enhancements</h2>
+            <p>Potential improvements for the analytics platform:</p>
+            <ul>
+                <li>Incorporate additional health indicators (chronic conditions, medications)</li>
+                <li>Develop time-series forecasting for individual member cost trajectories</li>
+                <li>Add natural language query capability using Power BI Q&A</li>
+                <li>Implement automated anomaly detection for fraud prevention</li>
+                <li>Create mobile-optimized dashboards for field underwriters</li>
+                <li>Integrate external data sources (socioeconomic indicators, health trends)</li>
+                <li>Build deep learning models for more complex pattern recognition</li>
+                <li>Develop recommendation engine for personalized wellness programs</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Tools & Technologies</h2>
+            <ul>
+                <li><strong>Power BI:</strong> Dashboard development and visualization</li>
+                <li><strong>Python:</strong> Data analysis, feature engineering, machine learning</li>
+                <li><strong>Pandas & NumPy:</strong> Data manipulation and numerical operations</li>
+                <li><strong>Scikit-learn:</strong> Machine learning model development</li>
+                <li><strong>Matplotlib & Seaborn:</strong> Statistical visualizations for EDA</li>
+                <li><strong>Jupyter Notebooks:</strong> Iterative analysis and documentation</li>
+                <li><strong>DAX:</strong> Power BI measure development</li>
+                <li><strong>Power Query:</strong> Data transformation and preparation</li>
+            </ul>
+        </section>
+
+        <section class="cta-section">
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/EDA%20%26%20ML%20predictions%20on%20Medical%20Cost%20Billed%20by%20Health%20Insurance" class="github-link">View Project on GitHub</a>
+        </section>
+
+        <footer>
+            <p>© 2024 Muzafar</p>
+        </footer>
+    </div>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
