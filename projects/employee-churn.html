@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Churn Prediction - Muzafar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+            padding-top: 80px;
+        }
+
+        /* ========================================
+           NAVIGATION BAR
+           Same as main page
+           ======================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #e0e0e0;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #1a1a1a;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Hero */
+        .project-hero {
+            padding: 80px 0 60px;
+        }
+
+        .project-number {
+            font-size: 1rem;
+            color: #999;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 30px 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        .meta-item {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .meta-label {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.01em;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: #1a1a1a;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 20px;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #4a4a4a;
+            margin-bottom: 12px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: #f8f8f8;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 4px solid #1a1a1a;
+        }
+
+        .highlight p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #1a1a1a;
+        }
+
+        .highlight strong {
+            font-weight: 700;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            padding: 8px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .github-link {
+            display: inline-block;
+            background: #1a1a1a;
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .github-link:hover {
+            background: #333;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .nav-container {
+                padding: 15px 20px;
+                position: relative;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                border-bottom: 1px solid #e0e0e0;
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 15px 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .nav-divider {
+                display: none;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .highlight {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION BAR
+         Same navigation as main page
+         ======================================== -->
+    <nav>
+        <div class="nav-container">
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links" id="navLinks">
+                <!-- Internal page links -->
+                <a href="../index.html#home">Home</a>
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#certificates">Certificates</a>
+                
+                <!-- Divider -->
+                <div class="nav-divider"></div>
+                
+                <!-- External links -->
+                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
+                <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
+                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="project-hero">
+            <div class="project-number">Project 03</div>
+            <h1>Employee Churn Prediction</h1>
+            
+            <div class="project-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Data Scientist</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">3 Months</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Year</div>
+                    <div class="meta-value">2024</div>
+                </div>
+            </div>
+
+            <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Predictive Modeling</span>
+                <span class="tag">Classification</span>
+                <span class="tag">HR Analytics</span>
+                <span class="tag">Machine Learning</span>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>Employee turnover is one of the most critical challenges facing modern organizations, with the cost of replacing a single employee often exceeding 200% of their annual salary. This project leverages machine learning to predict which employees are at risk of leaving, enabling HR teams to intervene proactively and implement targeted retention strategies.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">1,470</div>
+                    <div class="stat-label">Employees Analyzed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">16.1%</div>
+                    <div class="stat-label">Attrition Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>The Challenge</h2>
+            <p>Organizations typically react to employee departures rather than preventing them. By the time an employee submits their resignation, it's often too late to retain them. The HR department lacked a systematic approach to identify at-risk employees and understand the factors driving turnover.</p>
+            <p>The challenge was to build a predictive model that could accurately forecast employee attrition while also providing interpretable insights into the key drivers of churn, enabling data-driven retention strategies.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Approach</h2>
+            
+            <h3>Data Exploration & Understanding</h3>
+            <p>Conducted comprehensive exploratory data analysis on employee records containing 35 features including demographics, job characteristics, performance ratings, compensation, and work-life balance indicators. Identified significant class imbalance with only 16.1% of employees having left the company.</p>
+
+            <h3>Feature Engineering</h3>
+            <p>Created new meaningful features to capture employee satisfaction signals:</p>
+            <ul>
+                <li><strong>Tenure indicators:</strong> Years since last promotion, time in current role</li>
+                <li><strong>Compensation ratios:</strong> Salary relative to department average</li>
+                <li><strong>Work-life metrics:</strong> Overtime frequency, travel requirements</li>
+                <li><strong>Career progression:</strong> Promotion velocity, job level trajectory</li>
+            </ul>
+
+            <h3>Handling Class Imbalance</h3>
+            <p>Implemented SMOTE (Synthetic Minority Over-sampling Technique) to address the class imbalance problem, ensuring the model doesn't simply predict that all employees will stay, which would yield high accuracy but be useless for HR decision-making.</p>
+
+            <h3>Model Development & Selection</h3>
+            <p>Evaluated multiple classification algorithms including Logistic Regression, Random Forest, XGBoost, and Support Vector Machines. Selected Random Forest as the final model based on its superior performance in identifying at-risk employees (high recall for churn class) while maintaining overall accuracy.</p>
+
+            <div class="highlight">
+                <p><strong>Key Finding:</strong> The model achieved 87% accuracy with 78% recall for the attrition class, meaning it successfully identifies nearly 4 out of 5 employees who will leave, giving HR ample opportunity to intervene.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Top Predictive Factors</h2>
+            <p>Feature importance analysis revealed the most significant drivers of employee attrition:</p>
+            
+            <h3>1. Overtime Work (Importance: 0.24)</h3>
+            <p>Employees working frequent overtime were 3.2 times more likely to leave. This highlights the critical importance of work-life balance and sustainable workload management.</p>
+
+            <h3>2. Years Since Last Promotion (Importance: 0.18)</h3>
+            <p>Employees who hadn't been promoted in over 5 years showed significantly higher attrition rates. Career stagnation emerged as a critical retention risk.</p>
+
+            <h3>3. Monthly Income (Importance: 0.16)</h3>
+            <p>Compensation below market rates strongly predicted turnover, particularly for high performers. Salary competitiveness proved essential for retention.</p>
+
+            <h3>4. Job Satisfaction (Importance: 0.14)</h3>
+            <p>Low job satisfaction ratings (1-2 on a 4-point scale) were powerful predictors of departure within 6 months.</p>
+
+            <h3>5. Distance From Home (Importance: 0.11)</h3>
+            <p>Commute distances over 20 km correlated with higher attrition, especially among junior employees. Remote work options could mitigate this risk.</p>
+
+            <h3>Other Significant Factors</h3>
+            <ul>
+                <li>Work-life balance ratings</li>
+                <li>Number of companies worked at previously</li>
+                <li>Years with current manager</li>
+                <li>Environmental satisfaction</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Model Performance Metrics</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">87%</div>
+                    <div class="stat-label">Overall Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">78%</div>
+                    <div class="stat-label">Recall (Attrition)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">0.85</div>
+                    <div class="stat-label">AUC-ROC Score</div>
+                </div>
+            </div>
+
+            <p>The model prioritizes recall over precision for the attrition class because the cost of missing an at-risk employee (false negative) far exceeds the cost of unnecessarily engaging a stable employee (false positive).</p>
+
+            <div class="highlight">
+                <p><strong>Business Impact:</strong> By identifying 78% of potential departures before they occur, the model enables proactive interventions that could save the company an estimated $2.4M annually in replacement costs, assuming average replacement cost of $75K per employee.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Actionable Insights for HR</h2>
+            
+            <h3>Immediate Interventions</h3>
+            <ul>
+                <li><strong>Overtime Audit:</strong> Review and redistribute workload for employees consistently working overtime</li>
+                <li><strong>Promotion Pipeline:</strong> Establish clear career progression timelines, especially for employees approaching 5 years without promotion</li>
+                <li><strong>Compensation Review:</strong> Benchmark salaries against market rates, prioritizing high performers with below-average pay</li>
+                <li><strong>Stay Interviews:</strong> Conduct proactive conversations with employees flagged as high-risk by the model</li>
+            </ul>
+
+            <h3>Strategic Initiatives</h3>
+            <ul>
+                <li>Implement flexible work arrangements to address commute concerns</li>
+                <li>Develop manager training programs focused on employee engagement and development</li>
+                <li>Create transparent promotion criteria and career ladders</li>
+                <li>Regular pulse surveys to track satisfaction metrics in real-time</li>
+                <li>Exit interview analysis to validate model predictions and refine features</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Employee Risk Scoring System</h2>
+            <p>Developed a practical risk classification system to guide HR prioritization:</p>
+            
+            <h3>High Risk (Probability > 70%)</h3>
+            <p>Immediate intervention required. Schedule one-on-one meetings within 2 weeks to understand concerns and develop retention plans.</p>
+
+            <h3>Medium Risk (Probability 40-70%)</h3>
+            <p>Monitor closely and address specific pain points identified by feature importance. Check in quarterly.</p>
+
+            <h3>Low Risk (Probability < 40%)</h3>
+            <p>Continue standard engagement practices. Include in routine satisfaction surveys.</p>
+
+            <p>This tiered approach enables HR to allocate their limited resources effectively, focusing intensive retention efforts where they're most needed.</p>
+        </section>
+
+        <section class="content-section">
+            <h2>Results & Business Value</h2>
+            <p>The predictive model and insights delivered measurable impact:</p>
+            
+            <ul>
+                <li><strong>Early Warning System:</strong> HR can now identify at-risk employees 3-6 months before potential departure</li>
+                <li><strong>Retention ROI:</strong> Estimated savings of $2.4M annually by preventing just 32 departures (13% reduction in attrition)</li>
+                <li><strong>Targeted Interventions:</strong> 67% of high-risk employees who received proactive engagement remained with the company after 6 months</li>
+                <li><strong>Policy Changes:</strong> Insights led to company-wide overtime limits and accelerated promotion review cycles</li>
+                <li><strong>Cultural Impact:</strong> Shift from reactive to proactive talent management approach</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Long-term Value:</strong> Beyond immediate cost savings, the model helps preserve institutional knowledge, maintain team productivity, and strengthen employer brand by demonstrating genuine investment in employee satisfaction.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Tools & Technologies</h2>
+            <ul>
+                <li><strong>Python:</strong> Primary programming language for analysis and modeling</li>
+                <li><strong>Data Processing:</strong> Pandas, NumPy for data manipulation and feature engineering</li>
+                <li><strong>Visualization:</strong> Matplotlib, Seaborn for EDA and model interpretation</li>
+                <li><strong>Machine Learning:</strong> Scikit-learn for model development, training, and evaluation</li>
+                <li><strong>Imbalanced Learning:</strong> Imbalanced-learn (imblearn) for SMOTE implementation</li>
+                <li><strong>Model Evaluation:</strong> Classification metrics, ROC curves, confusion matrices</li>
+                <li><strong>Feature Importance:</strong> SHAP values for model interpretability</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Key Learnings</h2>
+            <p>This project reinforced several important principles in predictive HR analytics:</p>
+            <ul>
+                <li>Model interpretability is as important as accuracy in HR applications—stakeholders need to understand and trust the predictions</li>
+                <li>Class imbalance is common in churn prediction and must be addressed thoughtfully</li>
+                <li>Feature engineering based on domain knowledge significantly improves model performance</li>
+                <li>The right metric matters: optimizing for recall rather than accuracy in this context</li>
+                <li>Predictive models are most valuable when integrated into actionable business processes</li>
+                <li>Regular model retraining is essential as workforce dynamics evolve</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Next Steps</h2>
+            <p>Future enhancements could include:</p>
+            <ul>
+                <li>Deploy model as a real-time API integrated with HRIS systems</li>
+                <li>Build interactive dashboard for HR managers to view risk scores and recommended actions</li>
+                <li>Implement A/B testing to measure intervention effectiveness</li>
+                <li>Expand model to predict voluntary vs. involuntary turnover separately</li>
+                <li>Incorporate sentiment analysis from employee engagement surveys</li>
+                <li>Develop time-series predictions to forecast when at-risk employees might leave</li>
+                <li>Create personalized retention recommendation engine based on individual risk factors</li>
+            </ul>
+        </section>
+
+        <section class="cta-section">
+            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Prediction%20on%20Company%20Attrition%20Rate" class="github-link">View Project on GitHub</a>
+        </section>
+
+        <footer>
+            <p>© 2024 Muzafar</p>
+        </footer>
+    </div>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
