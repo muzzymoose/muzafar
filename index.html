@@ -145,7 +145,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
-            padding: 80px 0;
+            padding: 80px 60px;
             border-bottom: 1px solid #e0e0e0;
             text-decoration: none;
             color: inherit;
@@ -153,9 +153,15 @@
             position: relative;
         }
 
+        .project-card:first-child {
+            padding-top: 60px;
+        }
+
         .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateX(10px);
+            background: #fafafa;
+            padding-left: 70px;
+            padding-right: 50px;
         }
 
         .project-card:hover .project-number {
@@ -345,6 +351,12 @@
                 grid-template-columns: 1fr;
                 gap: 30px;
                 padding: 60px 30px;
+            }
+
+            .project-card:hover {
+                transform: none;
+                padding-left: 30px;
+                padding-right: 30px;
             }
 
             .project-number {
