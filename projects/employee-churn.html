@@ -5,617 +5,386 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Churn Prediction - Muzafar</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #faf9f7;
+            --text: #1a1a1a;
+            --muted: #666;
+            --line: #e8e4de;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.7;
-            padding-top: 80px;
         }
 
-        /* ========================================
-           NAVIGATION BAR
-           Same as main page
-           ======================================== */
-        nav {
+        .topo-bg {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #1a1a1a;
-        }
-
-        .nav-divider {
-            width: 1px;
-            height: 20px;
-            background: #e0e0e0;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #1a1a1a;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 60px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Hero */
-        .project-hero {
-            padding: 80px 0 60px;
+        nav {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .project-number {
-            font-size: 1rem;
-            color: #999;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 30px;
+        .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
             letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: var(--text); }
+
+        .project-header {
+            padding: 60px 0 50px;
+        }
+
+        .project-num {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .project-header h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 500;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
         }
 
         .project-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
+            gap: 50px;
             padding: 30px 0;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-            margin: 40px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
         }
 
         .meta-item {
-            flex: 1;
-            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .meta-label {
-            font-size: 0.85rem;
-            color: #999;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
         }
 
         .meta-value {
-            font-size: 1.1rem;
-            color: #1a1a1a;
-            font-weight: 500;
+            font-size: 0.95rem;
         }
 
-        /* Content Sections */
+        .project-content {
+            padding: 50px 0;
+        }
+
         .content-section {
-            padding: 60px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .content-section:last-of-type {
-            border-bottom: none;
+            margin-bottom: 50px;
         }
 
         .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -0.01em;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 40px 0 20px;
-            color: #1a1a1a;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 15px;
         }
 
         .content-section p {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #4a4a4a;
-            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 15px;
         }
 
-        .content-section ul, .content-section ol {
-            margin: 20px 0 20px 30px;
+        .content-section ul {
+            list-style: none;
+            margin: 15px 0;
         }
 
         .content-section li {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #4a4a4a;
-            margin-bottom: 12px;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin: 40px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .stat-value {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Highlight Box */
-        .highlight {
-            background: #f8f8f8;
-            padding: 40px;
-            margin: 40px 0;
-            border-left: 4px solid #1a1a1a;
-        }
-
-        .highlight p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #1a1a1a;
-        }
-
-        .highlight strong {
-            font-weight: 700;
-        }
-
-        /* Tags */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .tag {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #666;
-            padding: 8px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .github-link {
-            display: inline-block;
-            background: #1a1a1a;
-            color: white;
-            padding: 18px 40px;
-            text-decoration: none;
             font-size: 1rem;
-            font-weight: 500;
-            transition: background 0.3s ease;
-            letter-spacing: 0.02em;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
         }
 
-        .github-link:hover {
-            background: #333;
+        .content-section li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--muted);
         }
 
-        /* Footer */
-        footer {
-            padding: 60px 0;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-            color: #666;
+        .project-image {
+            width: 100%;
+            background: var(--line);
+            border-radius: 4px;
+            margin: 40px 0;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-placeholder {
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px;
-            }
+        .stats-row {
+            display: flex;
+            gap: 60px;
+            padding: 30px 0;
+            border-top: 1px solid var(--line);
+            margin-top: 30px;
+        }
 
-            .nav-container {
-                padding: 15px 20px;
-                position: relative;
-            }
+        .stat-item {
+            text-align: left;
+        }
 
-            .mobile-menu-toggle {
-                display: block;
-            }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                border-bottom: 1px solid #e0e0e0;
-                padding: 20px;
-            }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-            .nav-links.active {
-                display: flex;
-            }
+        .project-cta {
+            padding-top: 40px;
+            border-top: 1px solid var(--line);
+        }
 
-            .nav-links a {
-                padding: 15px 0;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #f0f0f0;
-            }
+        .cta-link {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid var(--text);
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
 
-            .nav-divider {
-                display: none;
-            }
+        .cta-link:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
 
-            .container {
-                padding: 0 20px;
-            }
+        .project-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px 0;
+            border-top: 1px solid var(--line);
+            margin-top: 50px;
+        }
 
-            h1 {
-                font-size: 2.5rem;
-            }
+        .project-nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
 
-            .content-section h2 {
-                font-size: 2rem;
-            }
+        .project-nav a:hover { color: var(--text); }
 
-            .stat-value {
-                font-size: 2.5rem;
-            }
+        .project-nav .next { text-align: right; }
+        .project-nav .prev { text-align: left; }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
+        .nav-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
 
-            .highlight {
-                padding: 25px;
-            }
+        .nav-title {
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--line);
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 0 30px; }
+            .project-meta { flex-direction: column; gap: 20px; }
+            .stats-row { flex-direction: column; gap: 25px; }
         }
     </style>
 </head>
 <body>
-    <!-- ========================================
-         NAVIGATION BAR
-         Same navigation as main page
-         ======================================== -->
-    <nav>
-        <div class="nav-container">
-            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
-            <div class="nav-links" id="navLinks">
-                <!-- Internal page links -->
-                <a href="../index.html#home">Home</a>
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#projects">Projects</a>
-                <a href="../index.html#certificates">Certificates</a>
-                
-                <!-- Divider -->
-                <div class="nav-divider"></div>
-                
-                <!-- External links -->
-                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
-                <!-- <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
-                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a> -->
-            </div>
-        </div>
-    </nav>
+    <svg class="topo-bg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <style>.topo-line { fill: none; stroke: #d4cfc6; stroke-width: 0.8; }</style>
+        </defs>
+        <path class="topo-line" d="M-50,200 Q150,180 300,220 T600,200 T900,240 T1100,200"/>
+        <path class="topo-line" d="M-50,280 Q200,250 350,300 T650,270 T950,310 T1100,280"/>
+        <path class="topo-line" d="M-50,360 Q180,330 380,380 T700,350 T1000,390 T1100,360"/>
+        <path class="topo-line" d="M-50,440 Q200,410 400,460 T720,430 T1000,470 T1100,440"/>
+        <path class="topo-line" d="M-50,520 Q220,490 420,540 T750,510 T1050,550 T1100,520"/>
+        <path class="topo-line" d="M-50,600 Q180,570 380,620 T700,590 T1000,630 T1100,600"/>
+        <path class="topo-line" d="M-50,680 Q200,650 400,700 T720,670 T1020,710 T1100,680"/>
+        <path class="topo-line" d="M-50,760 Q220,730 420,780 T750,750 T1050,790 T1100,760"/>
+        <ellipse class="topo-line" cx="780" cy="280" rx="100" ry="70" transform="rotate(-10 780 280)"/>
+        <ellipse class="topo-line" cx="780" cy="280" rx="160" ry="110" transform="rotate(-10 780 280)"/>
+        <ellipse class="topo-line" cx="180" cy="650" rx="90" ry="60" transform="rotate(15 180 650)"/>
+        <ellipse class="topo-line" cx="180" cy="650" rx="140" ry="95" transform="rotate(15 180 650)"/>
+    </svg>
 
     <div class="container">
-        <section class="project-hero">
-            <div class="project-number">Project 03</div>
+        <nav>
+            <a href="../index.html" class="logo">muzafar.</a>
+            <a href="../index.html#work" class="back-link">← Back to projects</a>
+        </nav>
+
+        <header class="project-header">
+            <div class="project-num">Project 03</div>
             <h1>Employee Churn Prediction</h1>
-            
             <div class="project-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Role</div>
-                    <div class="meta-value">Data Scientist</div>
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Data Scientist</span>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Duration</div>
-                    <div class="meta-value">3 Months</div>
+                    <span class="meta-label">Duration</span>
+                    <span class="meta-value">3 Months</span>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Year</div>
-                    <div class="meta-value">2024</div>
+                    <span class="meta-label">Tools</span>
+                    <span class="meta-value">Python, Random Forest, SMOTE</span>
                 </div>
             </div>
+        </header>
 
-            <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">Predictive Modeling</span>
-                <span class="tag">Classification</span>
-                <span class="tag">HR Analytics</span>
-                <span class="tag">Machine Learning</span>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Overview</h2>
-            <p>Employee turnover is one of the most critical challenges facing modern organizations, with the cost of replacing a single employee often exceeding 200% of their annual salary. This project leverages machine learning to predict which employees are at risk of leaving, enabling HR teams to intervene proactively and implement targeted retention strategies.</p>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">1,470</div>
-                    <div class="stat-label">Employees Analyzed</div>
+        <div class="project-content">
+            <section class="content-section">
+                <h2>Overview</h2>
+                <p>Built a predictive model to identify employees at risk of leaving, enabling HR to intervene proactively. The Random Forest classifier achieved 87% accuracy with 78% recall, catching nearly 4 out of 5 potential departures before they happen.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value">1,470</div>
+                        <div class="stat-label">Employees Analyzed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">87%</div>
+                        <div class="stat-label">Model Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">78%</div>
+                        <div class="stat-label">Attrition Recall</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">16.1%</div>
-                    <div class="stat-label">Attrition Rate</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">87%</div>
-                    <div class="stat-label">Model Accuracy</div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="content-section">
-            <h2>The Challenge</h2>
-            <p>Organizations typically react to employee departures rather than preventing them. By the time an employee submits their resignation, it's often too late to retain them. The HR department lacked a systematic approach to identify at-risk employees and understand the factors driving turnover.</p>
-            <p>The challenge was to build a predictive model that could accurately forecast employee attrition while also providing interpretable insights into the key drivers of churn, enabling data-driven retention strategies.</p>
-        </section>
-
-        <section class="content-section">
-            <h2>Approach</h2>
-            
-            <h3>Data Exploration & Understanding</h3>
-            <p>Conducted comprehensive exploratory data analysis on employee records containing 35 features including demographics, job characteristics, performance ratings, compensation, and work-life balance indicators. Identified significant class imbalance with only 16.1% of employees having left the company.</p>
-
-            <h3>Feature Engineering</h3>
-            <p>Created new meaningful features to capture employee satisfaction signals:</p>
-            <ul>
-                <li><strong>Tenure indicators:</strong> Years since last promotion, time in current role</li>
-                <li><strong>Compensation ratios:</strong> Salary relative to department average</li>
-                <li><strong>Work-life metrics:</strong> Overtime frequency, travel requirements</li>
-                <li><strong>Career progression:</strong> Promotion velocity, job level trajectory</li>
-            </ul>
-
-            <h3>Handling Class Imbalance</h3>
-            <p>Implemented SMOTE (Synthetic Minority Over-sampling Technique) to address the class imbalance problem, ensuring the model doesn't simply predict that all employees will stay, which would yield high accuracy but be useless for HR decision-making.</p>
-
-            <h3>Model Development & Selection</h3>
-            <p>Evaluated multiple classification algorithms including Logistic Regression, Random Forest, XGBoost, and Support Vector Machines. Selected Random Forest as the final model based on its superior performance in identifying at-risk employees (high recall for churn class) while maintaining overall accuracy.</p>
-
-            <div class="highlight">
-                <p><strong>Key Finding:</strong> The model achieved 87% accuracy with 78% recall for the attrition class, meaning it successfully identifies nearly 4 out of 5 employees who will leave, giving HR ample opportunity to intervene.</p>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Top Predictive Factors</h2>
-            <p>Feature importance analysis revealed the most significant drivers of employee attrition:</p>
-            
-            <h3>1. Overtime Work (Importance: 0.24)</h3>
-            <p>Employees working frequent overtime were 3.2 times more likely to leave. This highlights the critical importance of work-life balance and sustainable workload management.</p>
-
-            <h3>2. Years Since Last Promotion (Importance: 0.18)</h3>
-            <p>Employees who hadn't been promoted in over 5 years showed significantly higher attrition rates. Career stagnation emerged as a critical retention risk.</p>
-
-            <h3>3. Monthly Income (Importance: 0.16)</h3>
-            <p>Compensation below market rates strongly predicted turnover, particularly for high performers. Salary competitiveness proved essential for retention.</p>
-
-            <h3>4. Job Satisfaction (Importance: 0.14)</h3>
-            <p>Low job satisfaction ratings (1-2 on a 4-point scale) were powerful predictors of departure within 6 months.</p>
-
-            <h3>5. Distance From Home (Importance: 0.11)</h3>
-            <p>Commute distances over 20 km correlated with higher attrition, especially among junior employees. Remote work options could mitigate this risk.</p>
-
-            <h3>Other Significant Factors</h3>
-            <ul>
-                <li>Work-life balance ratings</li>
-                <li>Number of companies worked at previously</li>
-                <li>Years with current manager</li>
-                <li>Environmental satisfaction</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Model Performance Metrics</h2>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">87%</div>
-                    <div class="stat-label">Overall Accuracy</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">78%</div>
-                    <div class="stat-label">Recall (Attrition)</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">0.85</div>
-                    <div class="stat-label">AUC-ROC Score</div>
-                </div>
+            <div class="project-image">
+                <!-- Replace with: <img src="../images/project-churn.jpg" alt="Churn Prediction Model"> -->
+                <div class="image-placeholder">[ Feature importance visualization ]</div>
             </div>
 
-            <p>The model prioritizes recall over precision for the attrition class because the cost of missing an at-risk employee (false negative) far exceeds the cost of unnecessarily engaging a stable employee (false positive).</p>
+            <section class="content-section">
+                <h2>The Challenge</h2>
+                <p>Organizations react to resignations rather than preventing them. With only 16.1% attrition rate in the dataset, the model needed to handle severe class imbalance while providing interpretable insights HR could act on.</p>
+            </section>
 
-            <div class="highlight">
-                <p><strong>Business Impact:</strong> By identifying 78% of potential departures before they occur, the model enables proactive interventions that could save the company an estimated $2.4M annually in replacement costs, assuming average replacement cost of $75K per employee.</p>
+            <section class="content-section">
+                <h2>Approach</h2>
+                <ul>
+                    <li>Engineered features: tenure indicators, compensation ratios, promotion velocity</li>
+                    <li>Applied SMOTE to address class imbalance (16% attrition vs 84% retained)</li>
+                    <li>Compared Logistic Regression, Random Forest, XGBoost, and SVM</li>
+                    <li>Optimized for recall to minimize missed at-risk employees</li>
+                </ul>
+            </section>
+
+            <section class="content-section">
+                <h2>Key Findings</h2>
+                <ul>
+                    <li>Overtime is the strongest predictor — 3.2x higher attrition for frequent overtime workers</li>
+                    <li>Employees without promotion in 5+ years show significantly higher churn risk</li>
+                    <li>Below-market compensation strongly predicts departure for high performers</li>
+                    <li>Commute distance over 20km correlates with higher turnover</li>
+                </ul>
+            </section>
+
+            <div class="project-cta">
+                <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Prediction%20on%20Company%20Attrition%20Rate" target="_blank" class="cta-link">View on GitHub</a>
             </div>
-        </section>
+        </div>
 
-        <section class="content-section">
-            <h2>Actionable Insights for HR</h2>
-            
-            <h3>Immediate Interventions</h3>
-            <ul>
-                <li><strong>Overtime Audit:</strong> Review and redistribute workload for employees consistently working overtime</li>
-                <li><strong>Promotion Pipeline:</strong> Establish clear career progression timelines, especially for employees approaching 5 years without promotion</li>
-                <li><strong>Compensation Review:</strong> Benchmark salaries against market rates, prioritizing high performers with below-average pay</li>
-                <li><strong>Stay Interviews:</strong> Conduct proactive conversations with employees flagged as high-risk by the model</li>
-            </ul>
-
-            <h3>Strategic Initiatives</h3>
-            <ul>
-                <li>Implement flexible work arrangements to address commute concerns</li>
-                <li>Develop manager training programs focused on employee engagement and development</li>
-                <li>Create transparent promotion criteria and career ladders</li>
-                <li>Regular pulse surveys to track satisfaction metrics in real-time</li>
-                <li>Exit interview analysis to validate model predictions and refine features</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Employee Risk Scoring System</h2>
-            <p>Developed a practical risk classification system to guide HR prioritization:</p>
-            
-            <h3>High Risk (Probability > 70%)</h3>
-            <p>Immediate intervention required. Schedule one-on-one meetings within 2 weeks to understand concerns and develop retention plans.</p>
-
-            <h3>Medium Risk (Probability 40-70%)</h3>
-            <p>Monitor closely and address specific pain points identified by feature importance. Check in quarterly.</p>
-
-            <h3>Low Risk (Probability < 40%)</h3>
-            <p>Continue standard engagement practices. Include in routine satisfaction surveys.</p>
-
-            <p>This tiered approach enables HR to allocate their limited resources effectively, focusing intensive retention efforts where they're most needed.</p>
-        </section>
-
-        <section class="content-section">
-            <h2>Results & Business Value</h2>
-            <p>The predictive model and insights delivered measurable impact:</p>
-            
-            <ul>
-                <li><strong>Early Warning System:</strong> HR can now identify at-risk employees 3-6 months before potential departure</li>
-                <li><strong>Retention ROI:</strong> Estimated savings of $2.4M annually by preventing just 32 departures (13% reduction in attrition)</li>
-                <li><strong>Targeted Interventions:</strong> 67% of high-risk employees who received proactive engagement remained with the company after 6 months</li>
-                <li><strong>Policy Changes:</strong> Insights led to company-wide overtime limits and accelerated promotion review cycles</li>
-                <li><strong>Cultural Impact:</strong> Shift from reactive to proactive talent management approach</li>
-            </ul>
-
-            <div class="highlight">
-                <p><strong>Long-term Value:</strong> Beyond immediate cost savings, the model helps preserve institutional knowledge, maintain team productivity, and strengthen employer brand by demonstrating genuine investment in employee satisfaction.</p>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Tools & Technologies</h2>
-            <ul>
-                <li><strong>Python:</strong> Primary programming language for analysis and modeling</li>
-                <li><strong>Data Processing:</strong> Pandas, NumPy for data manipulation and feature engineering</li>
-                <li><strong>Visualization:</strong> Matplotlib, Seaborn for EDA and model interpretation</li>
-                <li><strong>Machine Learning:</strong> Scikit-learn for model development, training, and evaluation</li>
-                <li><strong>Imbalanced Learning:</strong> Imbalanced-learn (imblearn) for SMOTE implementation</li>
-                <li><strong>Model Evaluation:</strong> Classification metrics, ROC curves, confusion matrices</li>
-                <li><strong>Feature Importance:</strong> SHAP values for model interpretability</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Key Learnings</h2>
-            <p>This project reinforced several important principles in predictive HR analytics:</p>
-            <ul>
-                <li>Model interpretability is as important as accuracy in HR applications—stakeholders need to understand and trust the predictions</li>
-                <li>Class imbalance is common in churn prediction and must be addressed thoughtfully</li>
-                <li>Feature engineering based on domain knowledge significantly improves model performance</li>
-                <li>The right metric matters: optimizing for recall rather than accuracy in this context</li>
-                <li>Predictive models are most valuable when integrated into actionable business processes</li>
-                <li>Regular model retraining is essential as workforce dynamics evolve</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Next Steps</h2>
-            <p>Future enhancements could include:</p>
-            <ul>
-                <li>Deploy model as a real-time API integrated with HRIS systems</li>
-                <li>Build interactive dashboard for HR managers to view risk scores and recommended actions</li>
-                <li>Implement A/B testing to measure intervention effectiveness</li>
-                <li>Expand model to predict voluntary vs. involuntary turnover separately</li>
-                <li>Incorporate sentiment analysis from employee engagement surveys</li>
-                <li>Develop time-series predictions to forecast when at-risk employees might leave</li>
-                <li>Create personalized retention recommendation engine based on individual risk factors</li>
-            </ul>
-        </section>
-
-        <section class="cta-section">
-            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Prediction%20on%20Company%20Attrition%20Rate" class="github-link">View Project on GitHub</a>
-        </section>
+        <nav class="project-nav">
+            <a href="customer-segmentation.html" class="prev">
+                <span class="nav-label">Previous Project</span>
+                <span class="nav-title">← Customer Segmentation</span>
+            </a>
+            <a href="bike-database.html" class="next">
+                <span class="nav-label">Next Project</span>
+                <span class="nav-title">Bike Store Database →</span>
+            </a>
+        </nav>
 
         <footer>
             <p>© 2024 Muzafar</p>
         </footer>
     </div>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-    </script>
 </body>
 </html>

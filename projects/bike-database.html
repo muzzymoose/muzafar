@@ -5,691 +5,386 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bike Store Database System - Muzafar</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #faf9f7;
+            --text: #1a1a1a;
+            --muted: #666;
+            --line: #e8e4de;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.7;
-            padding-top: 80px;
         }
 
-        /* ========================================
-           NAVIGATION BAR
-           Same as main page
-           ======================================== */
-        nav {
+        .topo-bg {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #1a1a1a;
-        }
-
-        .nav-divider {
-            width: 1px;
-            height: 20px;
-            background: #e0e0e0;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #1a1a1a;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 60px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Hero */
-        .project-hero {
-            padding: 80px 0 60px;
+        nav {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .project-number {
-            font-size: 1rem;
-            color: #999;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 30px;
+        .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
             letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: var(--text); }
+
+        .project-header {
+            padding: 60px 0 50px;
+        }
+
+        .project-num {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .project-header h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 500;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
         }
 
         .project-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
+            gap: 50px;
             padding: 30px 0;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-            margin: 40px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
         }
 
         .meta-item {
-            flex: 1;
-            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .meta-label {
-            font-size: 0.85rem;
-            color: #999;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
         }
 
         .meta-value {
-            font-size: 1.1rem;
-            color: #1a1a1a;
-            font-weight: 500;
+            font-size: 0.95rem;
         }
 
-        /* Content Sections */
+        .project-content {
+            padding: 50px 0;
+        }
+
         .content-section {
-            padding: 60px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .content-section:last-of-type {
-            border-bottom: none;
+            margin-bottom: 50px;
         }
 
         .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -0.01em;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 40px 0 20px;
-            color: #1a1a1a;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 15px;
         }
 
         .content-section p {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #4a4a4a;
-            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 15px;
         }
 
-        .content-section ul, .content-section ol {
-            margin: 20px 0 20px 30px;
+        .content-section ul {
+            list-style: none;
+            margin: 15px 0;
         }
 
         .content-section li {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #4a4a4a;
-            margin-bottom: 12px;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin: 40px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .stat-value {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Highlight Box */
-        .highlight {
-            background: #f8f8f8;
-            padding: 40px;
-            margin: 40px 0;
-            border-left: 4px solid #1a1a1a;
-        }
-
-        .highlight p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #1a1a1a;
-        }
-
-        .highlight strong {
-            font-weight: 700;
-        }
-
-        /* Code Block */
-        .code-block {
-            background: #f5f5f5;
-            padding: 25px;
-            border-radius: 8px;
-            margin: 30px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
-            overflow-x: auto;
-            border: 1px solid #e0e0e0;
-            white-space: pre;
-            line-height: 1.6;
-        }
-
-        /* Tags */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .tag {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #666;
-            padding: 8px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .github-link {
-            display: inline-block;
-            background: #1a1a1a;
-            color: white;
-            padding: 18px 40px;
-            text-decoration: none;
             font-size: 1rem;
-            font-weight: 500;
-            transition: background 0.3s ease;
-            letter-spacing: 0.02em;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
         }
 
-        .github-link:hover {
-            background: #333;
+        .content-section li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--muted);
         }
 
-        /* Footer */
-        footer {
-            padding: 60px 0;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-            color: #666;
+        .project-image {
+            width: 100%;
+            background: var(--line);
+            border-radius: 4px;
+            margin: 40px 0;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-placeholder {
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px;
-            }
+        .stats-row {
+            display: flex;
+            gap: 60px;
+            padding: 30px 0;
+            border-top: 1px solid var(--line);
+            margin-top: 30px;
+        }
 
-            .nav-container {
-                padding: 15px 20px;
-                position: relative;
-            }
+        .stat-item {
+            text-align: left;
+        }
 
-            .mobile-menu-toggle {
-                display: block;
-            }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                border-bottom: 1px solid #e0e0e0;
-                padding: 20px;
-            }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-            .nav-links.active {
-                display: flex;
-            }
+        .project-cta {
+            padding-top: 40px;
+            border-top: 1px solid var(--line);
+        }
 
-            .nav-links a {
-                padding: 15px 0;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #f0f0f0;
-            }
+        .cta-link {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid var(--text);
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
 
-            .nav-divider {
-                display: none;
-            }
+        .cta-link:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
 
-            .container {
-                padding: 0 20px;
-            }
+        .project-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px 0;
+            border-top: 1px solid var(--line);
+            margin-top: 50px;
+        }
 
-            h1 {
-                font-size: 2.5rem;
-            }
+        .project-nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
 
-            .content-section h2 {
-                font-size: 2rem;
-            }
+        .project-nav a:hover { color: var(--text); }
 
-            .stat-value {
-                font-size: 2.5rem;
-            }
+        .project-nav .next { text-align: right; }
+        .project-nav .prev { text-align: left; }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
+        .nav-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
 
-            .highlight {
-                padding: 25px;
-            }
+        .nav-title {
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 500;
+        }
 
-            .code-block {
-                padding: 15px;
-                font-size: 0.85rem;
-            }
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--line);
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 0 30px; }
+            .project-meta { flex-direction: column; gap: 20px; }
+            .stats-row { flex-direction: column; gap: 25px; }
         }
     </style>
 </head>
 <body>
-    <!-- ========================================
-         NAVIGATION BAR
-         Same navigation as main page
-         ======================================== -->
-    <nav>
-        <div class="nav-container">
-            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
-            <div class="nav-links" id="navLinks">
-                <!-- Internal page links -->
-                <a href="../index.html#home">Home</a>
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#projects">Projects</a>
-                <a href="../index.html#certificates">Certificates</a>
-                
-                <!-- Divider -->
-                <div class="nav-divider"></div>
-                
-                <!-- External links -->
-                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
-                <!-- <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
-                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a> -->
-            </div>
-        </div>
-    </nav>
+    <svg class="topo-bg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <style>.topo-line { fill: none; stroke: #d4cfc6; stroke-width: 0.8; }</style>
+        </defs>
+        <path class="topo-line" d="M-50,200 Q150,180 300,220 T600,200 T900,240 T1100,200"/>
+        <path class="topo-line" d="M-50,280 Q200,250 350,300 T650,270 T950,310 T1100,280"/>
+        <path class="topo-line" d="M-50,360 Q180,330 380,380 T700,350 T1000,390 T1100,360"/>
+        <path class="topo-line" d="M-50,440 Q200,410 400,460 T720,430 T1000,470 T1100,440"/>
+        <path class="topo-line" d="M-50,520 Q220,490 420,540 T750,510 T1050,550 T1100,520"/>
+        <path class="topo-line" d="M-50,600 Q180,570 380,620 T700,590 T1000,630 T1100,600"/>
+        <path class="topo-line" d="M-50,680 Q200,650 400,700 T720,670 T1020,710 T1100,680"/>
+        <path class="topo-line" d="M-50,760 Q220,730 420,780 T750,750 T1050,790 T1100,760"/>
+        <ellipse class="topo-line" cx="780" cy="280" rx="100" ry="70" transform="rotate(-10 780 280)"/>
+        <ellipse class="topo-line" cx="780" cy="280" rx="160" ry="110" transform="rotate(-10 780 280)"/>
+        <ellipse class="topo-line" cx="180" cy="650" rx="90" ry="60" transform="rotate(15 180 650)"/>
+        <ellipse class="topo-line" cx="180" cy="650" rx="140" ry="95" transform="rotate(15 180 650)"/>
+    </svg>
 
     <div class="container">
-        <section class="project-hero">
-            <div class="project-number">Project 04</div>
+        <nav>
+            <a href="../index.html" class="logo">muzafar.</a>
+            <a href="../index.html#work" class="back-link">← Back to projects</a>
+        </nav>
+
+        <header class="project-header">
+            <div class="project-num">Project 04</div>
             <h1>Bike Store Database System</h1>
-            
             <div class="project-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Role</div>
-                    <div class="meta-value">Data Engineer</div>
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Data Engineer</span>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Duration</div>
-                    <div class="meta-value">2 Months</div>
+                    <span class="meta-label">Duration</span>
+                    <span class="meta-value">2 Months</span>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Year</div>
-                    <div class="meta-value">2024</div>
+                    <span class="meta-label">Tools</span>
+                    <span class="meta-value">PostgreSQL, Python, pandas</span>
                 </div>
             </div>
+        </header>
 
-            <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">Database Design</span>
-                <span class="tag">ETL</span>
-                <span class="tag">SQL</span>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Overview</h2>
-            <p>This project demonstrates the end-to-end process of designing and implementing a relational database system for a bike retail store. The system automates the import of CSV data into PostgreSQL using Python, establishes proper relational schemas with foreign key constraints, and enables efficient querying for business intelligence purposes.</p>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">7</div>
-                    <div class="stat-label">Database Tables</div>
+        <div class="project-content">
+            <section class="content-section">
+                <h2>Overview</h2>
+                <p>Designed and implemented a normalized relational database for a bike retailer, migrating scattered CSV files into PostgreSQL. Built a reusable Python ETL framework that automates data import with full transaction control and integrity constraints.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Database Tables</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">50K+</div>
+                        <div class="stat-label">Records Imported</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">Query Speedup</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">50K+</div>
-                    <div class="stat-label">Records Imported</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">Data Integrity</div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="content-section">
-            <h2>The Challenge</h2>
-            <p>Many small to medium-sized retailers store their operational data in spreadsheets or flat CSV files, which leads to data redundancy, inconsistency, and inefficient querying. As the business grows, managing inventory, orders, customers, and products across multiple Excel files becomes increasingly problematic and error-prone.</p>
-            <p>The challenge was to migrate disparate CSV data sources into a properly normalized relational database structure that maintains data integrity, supports complex queries, and provides a scalable foundation for business growth.</p>
-        </section>
-
-        <section class="content-section">
-            <h2>Approach</h2>
-            
-            <h3>Database Schema Design</h3>
-            <p>Designed a normalized relational schema following third normal form (3NF) principles to eliminate redundancy and ensure data integrity. The schema consists of seven interconnected tables:</p>
-            <ul>
-                <li><strong>Stores:</strong> Retail location information</li>
-                <li><strong>Staff:</strong> Employee records with store assignments</li>
-                <li><strong>Customers:</strong> Customer profiles and contact information</li>
-                <li><strong>Categories:</strong> Product category hierarchy</li>
-                <li><strong>Brands:</strong> Bicycle manufacturer information</li>
-                <li><strong>Products:</strong> Product catalog with pricing and inventory</li>
-                <li><strong>Orders:</strong> Transaction records with order items (one-to-many relationship)</li>
-            </ul>
-
-            <h3>Entity Relationship Model</h3>
-            <p>Established clear relationships between entities:</p>
-            <ul>
-                <li>Each store has multiple staff members (one-to-many)</li>
-                <li>Each staff member can handle multiple orders (one-to-many)</li>
-                <li>Each customer can place multiple orders (one-to-many)</li>
-                <li>Each product belongs to one category and one brand (many-to-one)</li>
-                <li>Each order contains multiple order items (one-to-many)</li>
-                <li>Each order item references one product (many-to-one)</li>
-            </ul>
-
-            <div class="highlight">
-                <p><strong>Design Principle:</strong> By implementing proper foreign key constraints and referential integrity, the database automatically prevents orphaned records and maintains consistency across all tables.</p>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Python ETL Pipeline</h2>
-            
-            <h3>Automated Data Import Framework</h3>
-            <p>Developed a reusable Python framework that automates the entire CSV-to-PostgreSQL import process. The framework handles data validation, type conversion, and batch processing efficiently.</p>
-
-            <h3>Key Features</h3>
-            <ul>
-                <li><strong>Connection Management:</strong> Secure database connections using psycopg2 with connection pooling</li>
-                <li><strong>Data Validation:</strong> Pre-import checks for data types, null values, and referential integrity</li>
-                <li><strong>Error Handling:</strong> Comprehensive exception handling with detailed logging for troubleshooting</li>
-                <li><strong>Transaction Control:</strong> ACID-compliant transactions with rollback capabilities on failure</li>
-                <li><strong>Batch Processing:</strong> Efficient bulk inserts using COPY command for large datasets</li>
-                <li><strong>Schema Creation:</strong> Automated table creation with proper data types and constraints</li>
-            </ul>
-
-            <h3>Import Process</h3>
-            <p>The ETL pipeline follows a structured sequence:</p>
-            <ol>
-                <li>Read CSV files using pandas for data manipulation</li>
-                <li>Validate data integrity and handle missing values</li>
-                <li>Create database tables with appropriate schemas</li>
-                <li>Import dimension tables first (categories, brands, stores)</li>
-                <li>Import fact tables with foreign key dependencies (products, orders)</li>
-                <li>Verify data consistency with SQL queries</li>
-                <li>Generate import summary report</li>
-            </ol>
-        </section>
-
-        <section class="content-section">
-            <h2>Database Features</h2>
-            
-            <h3>Primary Keys & Indexes</h3>
-            <p>Implemented efficient indexing strategy for optimal query performance:</p>
-            <ul>
-                <li>Primary keys on all tables for unique identification</li>
-                <li>Indexed foreign key columns for faster joins</li>
-                <li>Composite indexes on frequently queried column combinations</li>
-                <li>B-tree indexes for range queries on dates and prices</li>
-            </ul>
-
-            <h3>Data Integrity Constraints</h3>
-            <ul>
-                <li><strong>NOT NULL constraints:</strong> Enforce required fields</li>
-                <li><strong>UNIQUE constraints:</strong> Prevent duplicate entries</li>
-                <li><strong>CHECK constraints:</strong> Validate data ranges (e.g., positive prices)</li>
-                <li><strong>FOREIGN KEY constraints:</strong> Maintain referential integrity</li>
-                <li><strong>DEFAULT values:</strong> Set standard values for optional fields</li>
-            </ul>
-
-            <h3>Query Optimization</h3>
-            <p>Optimized database for common business queries:</p>
-            <ul>
-                <li>Revenue reporting by store, staff, and time period</li>
-                <li>Inventory tracking with low-stock alerts</li>
-                <li>Customer purchase history and lifetime value</li>
-                <li>Product performance analysis by category and brand</li>
-                <li>Sales trends and seasonality patterns</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Example SQL Queries</h2>
-            
-            <h3>Revenue by Store</h3>
-            <div class="code-block">SELECT s.store_name, 
-       COUNT(o.order_id) AS total_orders,
-       SUM(oi.quantity * oi.list_price) AS total_revenue
-FROM stores s
-JOIN orders o 
-    ON s.store_id = o.store_id
-JOIN order_items oi 
-    ON o.order_id = oi.order_id
-GROUP BY s.store_name
-ORDER BY total_revenue DESC;</div>
-
-            <h3>Top Selling Products</h3>
-            <div class="code-block">SELECT p.product_name,
-       b.brand_name,
-       c.category_name,
-       SUM(oi.quantity) AS units_sold,
-       SUM(oi.quantity * oi.list_price) AS revenue
-FROM products p
-JOIN brands b 
-    ON p.brand_id = b.brand_id
-JOIN categories c 
-    ON p.category_id = c.category_id
-JOIN order_items oi 
-    ON p.product_id = oi.product_id
-GROUP BY p.product_name, b.brand_name, c.category_name
-ORDER BY units_sold DESC
-LIMIT 10;</div>
-
-            <h3>Customer Lifetime Value</h3>
-            <div class="code-block">SELECT c.customer_id,
-       c.first_name || ' ' || c.last_name AS customer_name,
-       COUNT(o.order_id) AS total_orders,
-       SUM(oi.quantity * oi.list_price) AS lifetime_value
-FROM customers c
-JOIN orders o 
-    ON c.customer_id = o.customer_id
-JOIN order_items oi 
-    ON o.order_id = oi.order_id
-GROUP BY c.customer_id, customer_name
-HAVING COUNT(o.order_id) > 1
-ORDER BY lifetime_value DESC;</div>
-        </section>
-
-        <section class="content-section">
-            <h2>Results & Impact</h2>
-            <p>The database system delivered significant operational improvements:</p>
-            
-            <div class="highlight">
-                <p><strong>Business Impact:</strong> Query performance improved by 95% compared to searching through CSV files, enabling real-time business intelligence and reducing report generation time from hours to seconds.</p>
+            <div class="project-image">
+                <!-- Replace with: <img src="../images/project-database.jpeg" alt="Database Schema ERD"> -->
+                <div class="image-placeholder">[ Entity relationship diagram ]</div>
             </div>
 
-            <ul>
-                <li><strong>Data Integrity:</strong> Eliminated duplicate records and inconsistencies that existed across multiple CSV files</li>
-                <li><strong>Query Efficiency:</strong> Complex analytical queries execute in under 100ms with proper indexing</li>
-                <li><strong>Scalability:</strong> Database handles 50,000+ records with minimal performance degradation</li>
-                <li><strong>Automation:</strong> CSV import process reduced from 2 hours manual work to 5 minutes automated execution</li>
-                <li><strong>Data Security:</strong> Implemented role-based access control and encrypted connections</li>
-                <li><strong>Backup & Recovery:</strong> Automated daily backups with point-in-time recovery capability</li>
-            </ul>
-        </section>
+            <section class="content-section">
+                <h2>The Challenge</h2>
+                <p>The retailer stored operational data across multiple Excel files — leading to redundancy, inconsistencies, and painfully slow reporting. Finding a customer's order history meant searching through several spreadsheets manually.</p>
+            </section>
 
-        <section class="content-section">
-            <h2>Technical Implementation</h2>
-            
-            <h3>Python Libraries Used</h3>
-            <ul>
-                <li><strong>psycopg2:</strong> PostgreSQL adapter for Python database connections</li>
-                <li><strong>pandas:</strong> Data manipulation and CSV parsing</li>
-                <li><strong>SQLAlchemy:</strong> ORM for higher-level database operations</li>
-                <li><strong>logging:</strong> Comprehensive logging for debugging and monitoring</li>
-                <li><strong>configparser:</strong> Secure credential management</li>
-            </ul>
+            <section class="content-section">
+                <h2>Approach</h2>
+                <ul>
+                    <li>Designed 3NF-normalized schema: Stores, Staff, Customers, Products, Orders, Brands, Categories</li>
+                    <li>Established foreign key constraints and referential integrity</li>
+                    <li>Built Python ETL pipeline with psycopg2 for automated CSV imports</li>
+                    <li>Implemented batch processing using COPY command for performance</li>
+                </ul>
+            </section>
 
-            <h3>PostgreSQL Configuration</h3>
-            <ul>
-                <li>Connection pooling for concurrent access</li>
-                <li>Query optimization with EXPLAIN ANALYZE</li>
-                <li>Vacuum and analyze for maintenance</li>
-                <li>Write-ahead logging (WAL) for crash recovery</li>
-            </ul>
+            <section class="content-section">
+                <h2>Key Outcomes</h2>
+                <ul>
+                    <li>Complex queries now execute in under 100ms (previously hours of manual lookup)</li>
+                    <li>Import process reduced from 2 hours manual work to 5 minutes automated</li>
+                    <li>Eliminated duplicate records and data inconsistencies</li>
+                    <li>Reusable framework can import any CSV structure with minimal config</li>
+                </ul>
+            </section>
 
-            <h3>Framework Advantages</h3>
-            <ul>
-                <li><strong>Reusability:</strong> Framework can import any CSV structure with minimal configuration</li>
-                <li><strong>Maintainability:</strong> Modular code structure for easy updates and debugging</li>
-                <li><strong>Error Recovery:</strong> Automatic rollback on failure prevents partial imports</li>
-                <li><strong>Documentation:</strong> Auto-generated data dictionaries and ER diagrams</li>
-            </ul>
-        </section>
+            <div class="project-cta">
+                <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/My%20framework/Import%20CSV%20to%20PostgreSQL" target="_blank" class="cta-link">View on GitHub</a>
+            </div>
+        </div>
 
-        <section class="content-section">
-            <h2>Key Learnings</h2>
-            <p>This project reinforced several important principles in database engineering:</p>
-            <ul>
-                <li>Proper schema design upfront saves countless hours of refactoring later</li>
-                <li>Foreign key constraints are essential for maintaining data integrity at the database level</li>
-                <li>Batch processing with COPY command is significantly faster than row-by-row inserts</li>
-                <li>Transaction control is critical for maintaining consistency during imports</li>
-                <li>Indexing strategy dramatically impacts query performance</li>
-                <li>Logging and error handling are as important as the core functionality</li>
-                <li>A well-designed ETL framework can be reused across multiple projects</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Future Enhancements</h2>
-            <p>Potential improvements for the database system:</p>
-            <ul>
-                <li>Implement incremental updates instead of full reloads</li>
-                <li>Add data validation rules using database triggers</li>
-                <li>Create materialized views for complex analytical queries</li>
-                <li>Develop a web-based admin interface for non-technical users</li>
-                <li>Implement change data capture (CDC) for audit trails</li>
-                <li>Add partitioning for large tables to improve performance</li>
-                <li>Create automated data quality reports</li>
-                <li>Integrate with BI tools like Tableau or Power BI</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Tools & Technologies</h2>
-            <ul>
-                <li><strong>Database:</strong> PostgreSQL 14+ for relational data storage</li>
-                <li><strong>Programming:</strong> Python 3.8+ for ETL automation</li>
-                <li><strong>Libraries:</strong> psycopg2, pandas, SQLAlchemy</li>
-                <li><strong>Development:</strong> Jupyter Notebooks for testing and documentation</li>
-                <li><strong>Version Control:</strong> Git for code management</li>
-                <li><strong>Database Tools:</strong> pgAdmin, DBeaver for management</li>
-                <li><strong>Visualization:</strong> ERD design tools for schema documentation</li>
-            </ul>
-        </section>
-
-        <section class="cta-section">
-            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/My%20framework/Import%20CSV%20to%20PostgreSQL" class="github-link">View Project on GitHub</a>
-        </section>
+        <nav class="project-nav">
+            <a href="employee-churn.html" class="prev">
+                <span class="nav-label">Previous Project</span>
+                <span class="nav-title">← Employee Churn</span>
+            </a>
+            <a href="medical-insurance.html" class="next">
+                <span class="nav-label">Next Project</span>
+                <span class="nav-title">Medical Insurance Analytics →</span>
+            </a>
+        </nav>
 
         <footer>
             <p>© 2024 Muzafar</p>
         </footer>
     </div>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-    </script>
 </body>
 </html>

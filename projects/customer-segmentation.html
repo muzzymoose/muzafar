@@ -5,536 +5,386 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Segmentation Analysis - Muzafar</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #faf9f7;
+            --text: #1a1a1a;
+            --muted: #666;
+            --line: #e8e4de;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.7;
-            padding-top: 80px;
         }
 
-        /* ========================================
-           NAVIGATION BAR
-           Same as main page
-           ======================================== */
-        nav {
+        .topo-bg {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #1a1a1a;
-        }
-
-        .nav-divider {
-            width: 1px;
-            height: 20px;
-            background: #e0e0e0;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #1a1a1a;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 60px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Hero */
-        .project-hero {
-            padding: 80px 0 60px;
+        nav {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .project-number {
-            font-size: 1rem;
-            color: #999;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 30px;
+        .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
             letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: var(--text); }
+
+        .project-header {
+            padding: 60px 0 50px;
+        }
+
+        .project-num {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .project-header h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 500;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
         }
 
         .project-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
+            gap: 50px;
             padding: 30px 0;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-            margin: 40px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
         }
 
         .meta-item {
-            flex: 1;
-            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .meta-label {
-            font-size: 0.85rem;
-            color: #999;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
         }
 
         .meta-value {
-            font-size: 1.1rem;
-            color: #1a1a1a;
-            font-weight: 500;
+            font-size: 0.95rem;
         }
 
-        /* Content Sections */
+        .project-content {
+            padding: 50px 0;
+        }
+
         .content-section {
-            padding: 60px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .content-section:last-of-type {
-            border-bottom: none;
+            margin-bottom: 50px;
         }
 
         .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -0.01em;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 40px 0 20px;
-            color: #1a1a1a;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            margin-bottom: 15px;
         }
 
         .content-section p {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #4a4a4a;
-            margin-bottom: 20px;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 15px;
         }
 
-        .content-section ul, .content-section ol {
-            margin: 20px 0 20px 30px;
+        .content-section ul {
+            list-style: none;
+            margin: 15px 0;
         }
 
         .content-section li {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #4a4a4a;
-            margin-bottom: 12px;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin: 40px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .stat-value {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Highlight Box */
-        .highlight {
-            background: #f8f8f8;
-            padding: 40px;
-            margin: 40px 0;
-            border-left: 4px solid #1a1a1a;
-        }
-
-        .highlight p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #1a1a1a;
-        }
-
-        .highlight strong {
-            font-weight: 700;
-        }
-
-        /* Tags */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .tag {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #666;
-            padding: 8px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .github-link {
-            display: inline-block;
-            background: #1a1a1a;
-            color: white;
-            padding: 18px 40px;
-            text-decoration: none;
             font-size: 1rem;
-            font-weight: 500;
-            transition: background 0.3s ease;
-            letter-spacing: 0.02em;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
         }
 
-        .github-link:hover {
-            background: #333;
+        .content-section li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--muted);
         }
 
-        /* Footer */
-        footer {
-            padding: 60px 0;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-            color: #666;
+        .project-image {
+            width: 100%;
+            background: var(--line);
+            border-radius: 4px;
+            margin: 40px 0;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-placeholder {
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
             font-size: 0.9rem;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding-top: 70px;
-            }
+        .stats-row {
+            display: flex;
+            gap: 60px;
+            padding: 30px 0;
+            border-top: 1px solid var(--line);
+            margin-top: 30px;
+        }
 
-            .nav-container {
-                padding: 15px 20px;
-                position: relative;
-            }
+        .stat-item {
+            text-align: left;
+        }
 
-            .mobile-menu-toggle {
-                display: block;
-            }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                border-bottom: 1px solid #e0e0e0;
-                padding: 20px;
-            }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-            .nav-links.active {
-                display: flex;
-            }
+        .project-cta {
+            padding-top: 40px;
+            border-top: 1px solid var(--line);
+        }
 
-            .nav-links a {
-                padding: 15px 0;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #f0f0f0;
-            }
+        .cta-link {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid var(--text);
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
 
-            .nav-divider {
-                display: none;
-            }
+        .cta-link:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
 
-            .container {
-                padding: 0 20px;
-            }
+        .project-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 50px 0;
+            border-top: 1px solid var(--line);
+            margin-top: 50px;
+        }
 
-            h1 {
-                font-size: 2.5rem;
-            }
+        .project-nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
 
-            .content-section h2 {
-                font-size: 2rem;
-            }
+        .project-nav a:hover { color: var(--text); }
 
-            .stat-value {
-                font-size: 2.5rem;
-            }
+        .project-nav .next { text-align: right; }
+        .project-nav .prev { text-align: left; }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
+        .nav-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 5px;
+        }
 
-            .highlight {
-                padding: 25px;
-            }
+        .nav-title {
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--line);
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 0 30px; }
+            .project-meta { flex-direction: column; gap: 20px; }
+            .stats-row { flex-direction: column; gap: 25px; }
         }
     </style>
 </head>
 <body>
-    <!-- ========================================
-         NAVIGATION BAR
-         Same navigation as main page
-         ======================================== -->
-    <nav>
-        <div class="nav-container">
-            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
-            <div class="nav-links" id="navLinks">
-                <!-- Internal page links -->
-                <a href="../index.html#home">Home</a>
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#projects">Projects</a>
-                <a href="../index.html#certificates">Certificates</a>
-                
-                <!-- Divider -->
-                <div class="nav-divider"></div>
-                
-                <!-- External links -->
-                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
-                <!-- <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
-                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a> -->
-            </div>
-        </div>
-    </nav>
+    <svg class="topo-bg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <style>.topo-line { fill: none; stroke: #d4cfc6; stroke-width: 0.8; }</style>
+        </defs>
+        <path class="topo-line" d="M-50,200 Q150,180 300,220 T600,200 T900,240 T1100,200"/>
+        <path class="topo-line" d="M-50,280 Q200,250 350,300 T650,270 T950,310 T1100,280"/>
+        <path class="topo-line" d="M-50,360 Q180,330 380,380 T700,350 T1000,390 T1100,360"/>
+        <path class="topo-line" d="M-50,440 Q200,410 400,460 T720,430 T1000,470 T1100,440"/>
+        <path class="topo-line" d="M-50,520 Q220,490 420,540 T750,510 T1050,550 T1100,520"/>
+        <path class="topo-line" d="M-50,600 Q180,570 380,620 T700,590 T1000,630 T1100,600"/>
+        <path class="topo-line" d="M-50,680 Q200,650 400,700 T720,670 T1020,710 T1100,680"/>
+        <path class="topo-line" d="M-50,760 Q220,730 420,780 T750,750 T1050,790 T1100,760"/>
+        <ellipse class="topo-line" cx="780" cy="280" rx="100" ry="70" transform="rotate(-10 780 280)"/>
+        <ellipse class="topo-line" cx="780" cy="280" rx="160" ry="110" transform="rotate(-10 780 280)"/>
+        <ellipse class="topo-line" cx="180" cy="650" rx="90" ry="60" transform="rotate(15 180 650)"/>
+        <ellipse class="topo-line" cx="180" cy="650" rx="140" ry="95" transform="rotate(15 180 650)"/>
+    </svg>
 
     <div class="container">
-        <section class="project-hero">
-            <div class="project-number">Project 02</div>
+        <nav>
+            <a href="../index.html" class="logo">muzafar.</a>
+            <a href="../index.html#work" class="back-link">← Back to projects</a>
+        </nav>
+
+        <header class="project-header">
+            <div class="project-num">Project 02</div>
             <h1>Customer Segmentation Analysis</h1>
-            
             <div class="project-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Role</div>
-                    <div class="meta-value">Data Scientist</div>
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Data Scientist</span>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Duration</div>
-                    <div class="meta-value">2 Months</div>
+                    <span class="meta-label">Duration</span>
+                    <span class="meta-value">2 Months</span>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Year</div>
-                    <div class="meta-value">2024</div>
+                    <span class="meta-label">Tools</span>
+                    <span class="meta-value">Python, K-Means, RFM</span>
                 </div>
             </div>
+        </header>
 
-            <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">K-Means Clustering</span>
-                <span class="tag">RFM Analysis</span>
-                <span class="tag">Machine Learning</span>
-                <span class="tag">Data Visualization</span>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Overview</h2>
-            <p>This project focuses on creating actionable customer segments for a UK-based online retailer using advanced clustering techniques. By analyzing transactional data and customer behavior patterns, the goal was to identify distinct customer groups that could inform targeted marketing strategies and optimize resource allocation.</p>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">Customer Segments</div>
+        <div class="project-content">
+            <section class="content-section">
+                <h2>Overview</h2>
+                <p>Built customer segments for a UK online retailer using RFM analysis and K-Means clustering. The model identified 5 distinct behavioral groups, enabling targeted marketing strategies and more efficient resource allocation.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value">4,000+</div>
+                        <div class="stat-label">Customers Analyzed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Segments Identified</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">85%</div>
+                        <div class="stat-label">Cluster Quality</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">4,000+</div>
-                    <div class="stat-label">Customers Analyzed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">85%</div>
-                    <div class="stat-label">Clustering Quality</div>
-                </div>
+            </section>
+
+            <div class="project-image">
+                <!-- Replace with: <img src="../images/project-segmentation.png" alt="Customer Segments Visualization"> -->
+                <div class="image-placeholder">[ Cluster visualization ]</div>
             </div>
-        </section>
 
-        <section class="content-section">
-            <h2>The Challenge</h2>
-            <p>The retailer was treating all customers the same way with blanket marketing campaigns, leading to inefficient marketing spend and missed opportunities for personalized engagement. Without understanding customer behavior patterns, they couldn't identify high-value segments or at-risk customers who needed retention efforts.</p>
-            <p>The challenge was to develop a data-driven segmentation model that would reveal meaningful customer groups based on purchasing behavior, enabling the marketing team to craft targeted campaigns with higher ROI.</p>
-        </section>
+            <section class="content-section">
+                <h2>The Challenge</h2>
+                <p>The retailer treated all customers uniformly with blanket campaigns, leading to wasted marketing spend and missed personalization opportunities. They needed a data-driven way to identify high-value customers versus those at risk of churning.</p>
+            </section>
 
-        <section class="content-section">
-            <h2>Approach</h2>
-            
-            <h3>RFM Analysis Framework</h3>
-            <p>I implemented a comprehensive RFM (Recency, Frequency, Monetary) analysis to create customer behavior scores:</p>
-            <ul>
-                <li><strong>Recency:</strong> Days since last purchase - identifying recently active customers</li>
-                <li><strong>Frequency:</strong> Number of transactions - measuring customer loyalty</li>
-                <li><strong>Monetary:</strong> Total spending - quantifying customer value</li>
-            </ul>
+            <section class="content-section">
+                <h2>Approach</h2>
+                <ul>
+                    <li>Calculated RFM scores (Recency, Frequency, Monetary) for each customer</li>
+                    <li>Applied robust scaling and outlier handling to normalize features</li>
+                    <li>Used elbow method and silhouette analysis to determine optimal cluster count</li>
+                    <li>Validated segments with domain expertise and business logic</li>
+                </ul>
+            </section>
 
-            <h3>Data Preprocessing</h3>
-            <p>Cleaned and transformed transactional data including handling missing values, removing outliers, standardizing features using robust scaling techniques, and engineering additional behavioral features such as average order value and purchase seasonality.</p>
+            <section class="content-section">
+                <h2>Key Findings</h2>
+                <ul>
+                    <li>Top 20% of customers (Champions + Loyal) generate 65% of revenue</li>
+                    <li>22% of customers are "At Risk" — previously valuable but declining</li>
+                    <li>Targeted campaigns achieved 35% higher click-through rates</li>
+                    <li>Marketing spend waste reduced by 28% through better audience targeting</li>
+                </ul>
+            </section>
 
-            <h3>K-Means Clustering</h3>
-            <p>Applied K-Means clustering algorithm with careful parameter tuning. Used the elbow method and silhouette analysis to determine the optimal number of clusters. Validated cluster stability through multiple iterations and cross-validation techniques.</p>
-
-            <div class="highlight">
-                <p><strong>Key Insight:</strong> The optimal segmentation revealed 5 distinct customer groups, with the top 20% of customers accounting for 65% of total revenue, highlighting the importance of focused retention strategies.</p>
+            <div class="project-cta">
+                <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Customer%20Segmentation%20KMeans%20Cluster" target="_blank" class="cta-link">View on GitHub</a>
             </div>
-        </section>
+        </div>
 
-        <section class="content-section">
-            <h2>Customer Segments Identified</h2>
-            
-            <h3>1. Champions (15% of customers)</h3>
-            <p>Highest value customers who purchase frequently and recently. These are brand advocates who respond well to premium products and exclusive offers.</p>
-
-            <h3>2. Loyal Customers (20% of customers)</h3>
-            <p>Regular buyers with consistent purchase patterns. They have good monetary value and should be nurtured with loyalty programs and personalized recommendations.</p>
-
-            <h3>3. Potential Loyalists (25% of customers)</h3>
-            <p>Recent customers with moderate frequency. High potential for conversion into loyal customers through targeted engagement campaigns.</p>
-
-            <h3>4. At Risk (22% of customers)</h3>
-            <p>Previously valuable customers showing declining engagement. Require win-back campaigns and special incentives to prevent churn.</p>
-
-            <h3>5. Hibernating (18% of customers)</h3>
-            <p>Inactive customers with low recency scores. May need reactivation campaigns or should be deprioritized for marketing spend.</p>
-        </section>
-
-        <section class="content-section">
-            <h2>Results & Impact</h2>
-            <p>The segmentation model delivered significant business value:</p>
-            <ul>
-                <li>Enabled 35% increase in email campaign click-through rates through targeted messaging</li>
-                <li>Identified high-value segment representing 65% of revenue with only 20% of customer base</li>
-                <li>Reduced marketing spend waste by 28% through better audience targeting</li>
-                <li>Improved customer retention rate by 18% through proactive at-risk customer interventions</li>
-                <li>Provided actionable insights for product recommendations and cross-selling strategies</li>
-            </ul>
-
-            <div class="highlight">
-                <p><strong>Business Impact:</strong> The marketing team now has a clear framework for resource allocation, allowing them to focus premium customer service on Champions while running cost-effective reactivation campaigns for hibernating segments.</p>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2>Tools & Technologies</h2>
-            <ul>
-                <li><strong>Python:</strong> Core programming language for analysis and modeling</li>
-                <li><strong>Data Processing:</strong> Pandas, NumPy for data manipulation and feature engineering</li>
-                <li><strong>Machine Learning:</strong> Scikit-learn for K-Means clustering and model validation</li>
-                <li><strong>Visualization:</strong> Matplotlib, Seaborn, Plotly for cluster visualization and insights</li>
-                <li><strong>Statistical Analysis:</strong> SciPy for statistical testing and validation</li>
-                <li><strong>Jupyter Notebooks:</strong> For exploratory analysis and documentation</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Key Learnings</h2>
-            <ul>
-                <li>Feature engineering and proper scaling are critical for clustering performance</li>
-                <li>Domain expertise is essential for validating and interpreting cluster results</li>
-                <li>Combining multiple evaluation metrics provides more robust cluster validation</li>
-                <li>Regular model retraining is necessary as customer behavior evolves over time</li>
-                <li>Visualization techniques are crucial for communicating results to non-technical stakeholders</li>
-            </ul>
-        </section>
-
-        <section class="content-section">
-            <h2>Next Steps</h2>
-            <p>Future enhancements planned for this project include:</p>
-            <ul>
-                <li>Implementing automated pipeline for monthly segment updates and tracking migration between segments</li>
-                <li>Exploring advanced clustering algorithms like DBSCAN and hierarchical clustering for comparison</li>
-                <li>Building predictive models to forecast customer lifetime value for each segment</li>
-                <li>Developing a customer scoring system to predict churn probability</li>
-                <li>Creating an interactive dashboard for marketing team to explore segments in real-time</li>
-            </ul>
-        </section>
-
-        <section class="cta-section">
-            <a href="https://github.com/muzzymoose/Data-Science-Projects/tree/main/Customer%20Segmentation%20KMeans%20Cluster" class="github-link" target="_blank">View Project on GitHub</a>
-        </section>
+        <nav class="project-nav">
+            <a href="youtube-analytics.html" class="prev">
+                <span class="nav-label">Previous Project</span>
+                <span class="nav-title">← YouTube Analytics</span>
+            </a>
+            <a href="employee-churn.html" class="next">
+                <span class="nav-label">Next Project</span>
+                <span class="nav-title">Employee Churn Prediction →</span>
+            </a>
+        </nav>
 
         <footer>
             <p>© 2024 Muzafar</p>
         </footer>
     </div>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-    </script>
 </body>
 </html>
