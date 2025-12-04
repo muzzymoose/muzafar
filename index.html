@@ -4,657 +4,505 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muzafar - Data Developer</title>
-    <link rel="preload" as="image" href="images/hero-bg.jpg">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #faf9f7;
+            --text: #1a1a1a;
+            --muted: #666;
+            --line: #e8e4de;
+            --accent: #2d2d2d;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.6;
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        /* ========================================
-           NAVIGATION BAR
-           Edit links and text in the HTML below
-           ======================================== */
-        nav {
+        /* Topographic SVG Background */
+        .topo-bg {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid #e0e0e0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
-        .nav-container {
-            max-width: 1200px;
+        .container {
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px 40px;
+            padding: 0 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Minimal Nav */
+        nav {
+            padding: 40px 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 35px;
-            align-items: center;
+            gap: 40px;
         }
 
         .nav-links a {
-            color: #666;
+            color: var(--muted);
             text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #1a1a1a;
-        }
-
-        .nav-divider {
-            width: 1px;
-            height: 20px;
-            background: #e0e0e0;
-        }
-
-        /* Mobile menu */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #1a1a1a;
+        .nav-links a::after {
+            content: '';
             position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text);
+            transition: width 0.3s;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
 
-        /* Add padding to account for fixed nav */
-        body {
-            padding-top: 80px;
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
-            min-height: 100vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 100px 0;
-            position: relative;
-            background-image: url('images/hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* Dark overlay for text readability */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.85);
-            z-index: 1;
-        }
-
-        .hero > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 7rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 40px;
-            letter-spacing: -0.02em;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero .intro {
-            font-size: 1.5rem;
-            line-height: 1.8;
-            max-width: 800px;
-            color: #4a4a4a;
-            margin-bottom: 20px;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero .intro strong {
-            color: #1a1a1a;
-            font-weight: 600;
-        }
-
-        /* Section Headers */
-        .section {
             padding: 80px 0;
         }
 
-        .section-title {
-            font-size: 3rem;
-            font-weight: 700;
+        .hero-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        .hero-text {
+            max-width: 500px;
+            font-size: 1.15rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        /* Horizontal Line Divider */
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: var(--line);
+            margin: 100px 0;
+        }
+
+        /* Section */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
             margin-bottom: 60px;
-            letter-spacing: -0.02em;
         }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            gap: 40px;
-            margin-bottom: 100px;
+        .section-number {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
         }
 
-        .project-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            padding: 80px 60px;
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+        }
+
+        /* Projects - Stacked List */
+        a.project-item {
             text-decoration: none;
             color: inherit;
+        }
+
+        .project-item {
+            border-top: 1px solid var(--line);
+            padding: 50px 0;
+            display: grid;
+            grid-template-columns: 60px 1fr 200px;
+            gap: 40px;
+            align-items: start;
             transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            border-radius: 12px;
+            cursor: pointer;
         }
 
-        /* Overlay for readability */
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.75);
-            transition: background 0.4s ease;
-            z-index: 1;
+        .project-item:last-child {
+            border-bottom: 1px solid var(--line);
         }
 
-        .project-card:hover::before {
-            background: rgba(255, 255, 255, 0.65);
+        .project-item:hover {
+            padding-left: 20px;
         }
 
-        .project-card > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Individual project backgrounds */
-        .project-card:nth-child(1) {
-            background-image: url('images/project-youtube.jpg');
-        }
-
-        .project-card:nth-child(2) {
-            background-image: url('images/project-segmentation.png');
-        }
-
-        .project-card:nth-child(3) {
-            background-image: url('images/project-churn.jpg');
-        }
-
-        .project-card:nth-child(4) {
-            background-image: url('images/project-database.jpeg');
-        }
-
-        .project-card:nth-child(5) {
-            background-image: url('images/project-insurance.jpg');
-        }
-
-        .project-card:first-child {
-            padding-top: 60px;
-        }
-
-        .project-card:hover {
-            transform: translateX(10px);
-            background: #fafafa;
-            padding-left: 70px;
-            padding-right: 50px;
-        }
-
-        .project-card:hover .project-number {
-            color: #666;
-        }
-
-        .project-number {
-            font-size: 6rem;
-            font-weight: 700;
-            color: #f5f5f5;
-            line-height: 1;
-            margin-bottom: 20px;
-            transition: color 0.4s ease;
+        .project-num {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 500;
         }
 
         .project-content h3 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            transition: color 0.3s;
         }
 
-        .project-description {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4a4a4a;
-            margin-bottom: 30px;
+        .project-item:hover h3 {
+            color: var(--muted);
+        }
+
+        .project-content p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 500px;
+            line-height: 1.7;
         }
 
         .project-tags {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+            flex-direction: column;
+            gap: 8px;
+            text-align: right;
         }
 
         .project-tag {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            color: var(--muted);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #666;
+            letter-spacing: 0.1em;
+        }
+
+        /* About - Two Column */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 80px;
+        }
+
+        .about-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .about-text strong {
             font-weight: 500;
         }
 
-        .project-visual {
+        /* Skills as flowing text */
+        .skills-flow {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--line);
+        }
+
+        .skills-flow span {
+            display: inline;
+            font-size: 1.1rem;
+            line-height: 2.2;
+        }
+
+        .skill-item {
+            color: var(--text);
+            transition: color 0.3s;
+        }
+
+        .skill-item:hover {
+            color: var(--muted);
+        }
+
+        .skill-divider {
+            color: var(--line);
+            margin: 0 15px;
+        }
+
+        /* Certifications */
+        .cert-list {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 8rem;
-            opacity: 0.08;
-            transition: opacity 0.4s ease;
-        }
-
-        .project-card:hover .project-visual {
-            opacity: 0.15;
-        }
-
-        /* About Section */
-        .about-content {
-            font-size: 1.3rem;
-            line-height: 2;
-            max-width: 900px;
-            color: #4a4a4a;
-        }
-
-        .about-content p {
-            margin-bottom: 30px;
-        }
-
-        .about-content strong {
-            color: #1a1a1a;
-        }
-
-        /* Certificates Section */
-        .certificates-grid {
-            display: grid;
+            flex-direction: column;
             gap: 0;
         }
 
-        .cert-card {
+        .cert-item {
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 100px 1fr;
             gap: 40px;
-            padding: 40px 0;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 35px 0;
+            border-bottom: 1px solid var(--line);
         }
 
         .cert-year {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #999;
+            font-size: 0.85rem;
+            color: var(--muted);
         }
 
-        .cert-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #1a1a1a;
+        .cert-item h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 5px;
         }
 
         .cert-issuer {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-
-        .cert-description {
-            color: #4a4a4a;
-            line-height: 1.8;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            color: var(--muted);
         }
 
         /* Footer */
         footer {
-            padding: 60px 0;
-            border-top: 1px solid #e0e0e0;
+            padding: 80px 0 60px;
             text-align: center;
-            color: #666;
+            color: var(--muted);
+            font-size: 0.85rem;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 968px) {
-            body {
-                padding-top: 70px;
-            }
-
-            .nav-container {
-                padding: 15px 20px;
-                position: relative;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                border-bottom: 1px solid #e0e0e0;
-                padding: 20px;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links a {
-                padding: 15px 0;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid #f0f0f0;
-            }
-
-            .nav-divider {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 4rem;
-            }
-
-            .hero .intro {
-                font-size: 1.2rem;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .project-card {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 60px 30px;
-            }
-
-            .project-card:hover {
-                transform: translateY(-3px);
-            }
-
-            .project-number {
-                font-size: 4rem;
-            }
-
-            .project-content h3 {
-                font-size: 2rem;
-            }
-
-            .project-visual {
-                display: none;
-            }
-
-            .container {
-                padding: 0 20px;
-            }
-
-            .cert-card {
-                grid-template-columns: 1fr;
-            }
+        /* Responsive */
+        @media (max-width: 800px) {
+            .container { padding: 0 30px; }
+            .project-item { grid-template-columns: 1fr; gap: 20px; }
+            .project-tags { flex-direction: row; flex-wrap: wrap; text-align: left; }
+            .about-grid { grid-template-columns: 1fr; gap: 30px; }
+            .cert-item { grid-template-columns: 1fr; gap: 10px; }
+            .nav-links { gap: 25px; }
         }
     </style>
 </head>
 <body>
-    <!-- ========================================
-         NAVIGATION BAR
-         Easy to edit - just update the links below
-         ======================================== -->
-    <nav>
-        <div class="nav-container">
-            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
-            <div class="nav-links" id="navLinks">
-                <!-- Internal page links -->
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#certificates">Courses & Certifications</a>
-                
-                <!-- Divider -->
-                <div class="nav-divider"></div>
-                
-                <!-- External links - EDIT THESE URLs -->
-                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
-                <!-- <a href="https://medium.com/@ahmadmuzz" target="_blank">Medium</a>
-                <a href="https://www.hackerrank.com/profile/ahmadmuzz" target="_blank">HackerRank</a> -->
-            </div>
-        </div>
-    </nav>
+    <!-- SVG Topographic Background -->
+    <svg class="topo-bg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <style>
+                .topo-line { fill: none; stroke: #d4cfc6; stroke-width: 0.8; }
+            </style>
+        </defs>
+        <!-- Organic flowing contour lines -->
+        <path class="topo-line" d="M-50,200 Q150,180 300,220 T600,200 T900,240 T1100,200"/>
+        <path class="topo-line" d="M-50,250 Q200,220 350,280 T650,250 T950,290 T1100,260"/>
+        <path class="topo-line" d="M-50,320 Q180,300 380,350 T700,320 T1000,360 T1100,340"/>
+        <path class="topo-line" d="M-50,400 Q200,370 400,420 T720,390 T1000,440 T1100,410"/>
+        <path class="topo-line" d="M-50,480 Q220,450 420,500 T750,470 T1050,520 T1100,490"/>
+        <path class="topo-line" d="M-50,560 Q180,530 380,580 T700,550 T1000,600 T1100,570"/>
+        <path class="topo-line" d="M-50,640 Q200,610 400,660 T720,630 T1020,680 T1100,650"/>
+        <path class="topo-line" d="M-50,720 Q220,690 420,740 T750,710 T1050,760 T1100,730"/>
+        <path class="topo-line" d="M-50,800 Q180,770 380,820 T700,790 T1000,840 T1100,810"/>
+        <path class="topo-line" d="M-50,880 Q200,850 400,900 T720,870 T1020,920 T1100,890"/>
+        <!-- Circular contours for interest -->
+        <ellipse class="topo-line" cx="750" cy="300" rx="120" ry="80" transform="rotate(-15 750 300)"/>
+        <ellipse class="topo-line" cx="750" cy="300" rx="180" ry="120" transform="rotate(-15 750 300)"/>
+        <ellipse class="topo-line" cx="750" cy="300" rx="250" ry="170" transform="rotate(-15 750 300)"/>
+        <ellipse class="topo-line" cx="200" cy="700" rx="100" ry="70" transform="rotate(20 200 700)"/>
+        <ellipse class="topo-line" cx="200" cy="700" rx="160" ry="110" transform="rotate(20 200 700)"/>
+        <ellipse class="topo-line" cx="200" cy="700" rx="230" ry="160" transform="rotate(20 200 700)"/>
+    </svg>
 
     <div class="container">
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <h1>Hi, I am<br>Muzafar.</h1>
-            <div class="intro">
-                <p>I am a <strong>data developer and data scientist</strong> with a passion for uncovering stories hidden in numbers. I believe that data and visualization are powerful tools to drive business decisions.</p>
-                <p>Most of my time is spent transforming raw data into actionable insights. My skills include <strong>data analysis, machine learning, and business intelligence</strong>.</p>
-                <p>I enjoy solving complex problems and turning datasets into compelling narratives that stakeholders can understand and act upon.</p>
+        <nav>
+            <div class="logo">muzafar.</div>
+            <div class="nav-links">
+                <a href="#work">Work</a>
+                <a href="#about">About</a>
+                <a href="https://www.linkedin.com/in/ahmad-muzafar-azman/" target="_blank">LinkedIn</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-label">Data Developer & Scientist</div>
+            <h1>
+                Turning data
+                <span>into stories</span>
+            </h1>
+            <p class="hero-text">
+                I uncover the narratives hidden in numbers. Through analysis, visualization, and machine learning, I transform raw data into insights that drive decisions.
+            </p>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section" id="work">
+            <div class="section-header">
+                <span class="section-title">Selected Work</span>
+            </div>
+
+            <div class="project-item">
+                <span class="project-num">01</span>
+                <div class="project-content">
+                    <h3>YouTube Analytics & Sentiment Analysis</h3>
+                    <p>Scraped channel statistics to analyze engagement patterns. Built an NLP model to detect and predict hateful comments in reviews.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">NLP</span>
+                    <span class="project-tag">Scraping</span>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <span class="project-num">02</span>
+                <div class="project-content">
+                    <h3>Customer Segmentation Analysis</h3>
+                    <p>RFM analysis for a UK retailer identifying high-value customer segments and informing targeted marketing strategies.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Clustering</span>
+                    <span class="project-tag">ML</span>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <span class="project-num">03</span>
+                <div class="project-content">
+                    <h3>Employee Churn Prediction</h3>
+                    <p>Predictive modeling to forecast turnover, enabling HR teams to make data-driven retention decisions.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Classification</span>
+                    <span class="project-tag">HR Analytics</span>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <span class="project-num">04</span>
+                <div class="project-content">
+                    <h3>Bike Store Database System</h3>
+                    <p>PostgreSQL relational database design with Python automation for efficient retail data management.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">PostgreSQL</span>
+                    <span class="project-tag">Python</span>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <span class="project-num">05</span>
+                <div class="project-content">
+                    <h3>Medical Insurance Analytics</h3>
+                    <p>Dynamic Power BI dashboard with predictive models for insurance cost forecasting based on demographics.</p>
+                </div>
+                <div class="project-tags">
+                    <span class="project-tag">Power BI</span>
+                    <span class="project-tag">Healthcare</span>
+                </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section class="section" id="projects">
-            <h2 class="section-title">Selected Work</h2>
-            
-            <div class="projects-grid">
-                <a href="projects/youtube-analytics.html" class="project-card">
-                    <div class="project-content">
-                        <div class="project-number">01</div>
-                        <h3>YouTube Analytics & Sentiment Analysis</h3>
-                        <p class="project-description">
-                            Scraped statistics from Ali Abdaal's YouTube channel to analyze the correlation between likes and views. Implemented sentiment analysis to identify and predict hateful comments in the review section.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">NLP</span>
-                            <span class="project-tag">Web Scraping</span>
-                        </div>
-                    </div>
-                    <div class="project-visual">📊</div>
-                </a>
+        <div class="divider"></div>
 
-                <a href="projects/customer-segmentation.html" class="project-card">
-                    <div class="project-content">
-                        <div class="project-number">02</div>
-                        <h3>Customer Segmentation Analysis</h3>
-                        <p class="project-description">
-                            Created customer clusters for a UK retailer based on spending behavior using RFM (Recency, Frequency, Monetary) analysis to identify high-value customer segments and optimize marketing strategies.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">RFM Analysis</span>
-                            <span class="project-tag">Clustering</span>
-                            <span class="project-tag">Machine Learning</span>
-                        </div>
-                    </div>
-                    <div class="project-visual">👥</div>
-                </a>
-
-                <a href="projects/employee-churn.html" class="project-card">
-                    <div class="project-content">
-                        <div class="project-number">03</div>
-                        <h3>Employee Churn Prediction</h3>
-                        <p class="project-description">
-                            Analyzed company employee data to explore churn patterns and factors. Built a robust predictive model to forecast future employee turnover and help HR make data-driven retention decisions.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">Predictive Modeling</span>
-                            <span class="project-tag">HR Analytics</span>
-                            <span class="project-tag">Classification</span>
-                        </div>
-                    </div>
-                    <div class="project-visual">📉</div>
-                </a>
-
-                <a href="projects/bike-database.html" class="project-card">
-                    <div class="project-content">
-                        <div class="project-number">04</div>
-                        <h3>Bike Store Database System</h3>
-                        <p class="project-description">
-                            Designed and implemented a PostgreSQL relational database for a bike retail store. Used Python scripts to automate data management and ensure efficient query performance.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">PostgreSQL</span>
-                            <span class="project-tag">Database Design</span>
-                            <span class="project-tag">Python</span>
-                        </div>
-                    </div>
-                    <div class="project-visual">🗄️</div>
-                </a>
-
-                <a href="projects/medical-insurance.html" class="project-card">
-                    <div class="project-content">
-                        <div class="project-number">05</div>
-                        <h3>Medical Insurance Analytics Dashboard</h3>
-                        <p class="project-description">
-                            Developed a dynamic Power BI dashboard to analyze medical bills insured by a company. Created predictive models based on client demographics to forecast future insurance costs and trends.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">Power BI</span>
-                            <span class="project-tag">Healthcare Analytics</span>
-                            <span class="project-tag">Visualization</span>
-                        </div>
-                    </div>
-                    <div class="project-visual">💰</div>
-                </a>
-            </div>
-        </section>
-
-        <!-- ========================================
-             COURSES AND CERTIFICATIONS SECTION
-             Easy to edit - add/remove cert-card divs below
-             ======================================== -->
-        <section class="section" id="certificates">
-            <h2 class="section-title">Courses & Certifications</h2>
-            <div class="certificates-grid">
-                <!-- Master's Degree -->
-                <div class="cert-card">
-                    <div class="cert-year">2025-2027</div>
-                    <div class="cert-content">
-                        <h3>Master of Science in Data Science</h3>
-                        <div class="cert-issuer">Sunway University</div>
-                        <p class="cert-description">Currently pursuing advanced studies in data science, focusing on machine learning, statistical modeling, big data analytics, and research methodologies.</p>
-                    </div>
-                </div>
-
-                <!-- DataCamp Certificate 1 -->
-                <div class="cert-card">
-                    <div class="cert-year">2024</div>
-                    <div class="cert-content">
-                        <h3>Data Scientist Associate</h3>
-                        <div class="cert-issuer">DataCamp</div>
-                        <p class="cert-description">Comprehensive certification demonstrating proficiency in machine learning, statistical analysis, and Python programming. Covers data manipulation, model building, and practical data science workflows. Valid through October 2026.</p>
-                    </div>
-                </div>
-
-                <!-- DataCamp Certificate 2 -->
-                <div class="cert-card">
-                    <div class="cert-year">2024</div>
-                    <div class="cert-content">
-                        <h3>Data Analyst Associate</h3>
-                        <div class="cert-issuer">DataCamp</div>
-                        <p class="cert-description">Professional certification covering exploratory data analysis, data visualization, statistical methods, and SQL querying. Demonstrates ability to extract insights from data and communicate findings effectively. Valid through September 2026.</p>
-                    </div>
-                </div>
-
-                <!-- ADD MORE CERTIFICATES HERE - Just copy a cert-card div -->
-            </div>
-        </section>
-
-        <!-- About Section -->
         <section class="section" id="about">
-            <h2 class="section-title">About</h2>
-            <div class="about-content">
-                <p>My journey in data analytics began with a curiosity about how organizations make decisions. I wanted to understand the <strong>numbers behind the strategies</strong>.</p>
-                <p>I've worked on end-to-end data projects that typically start with collecting data from various sources and end with delivering actionable business insights in the form of <strong>reports, dashboards, and predictive models</strong>.</p>
-                <p>When I'm not analyzing data, I enjoy learning new techniques and tools. I believe in continuous learning and staying updated with the latest trends in <strong>data science and analytics</strong>.</p>
+            <div class="section-header">
+                <span class="section-title">About</span>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-label">Background</div>
+                <div class="about-text">
+                    <p>My journey began with a curiosity about how organizations make decisions—I wanted to understand the <strong>numbers behind the strategies</strong>.</p>
+                    <p>I work on end-to-end data projects, from collection and cleaning to delivering actionable insights as <strong>reports, dashboards, and predictive models</strong>.</p>
+                    <p>Currently working as a <strong>Data Developer</strong> while pursuing my <strong>MSc in Data Science (Part-Time)</strong> at Sunway University.</p>
+
+                    <div class="skills-flow">
+                        <span class="skill-item">Python</span><span class="skill-divider">/</span>
+                        <span class="skill-item">SQL</span><span class="skill-divider">/</span>
+                        <span class="skill-item">Machine Learning</span><span class="skill-divider">/</span>
+                        <span class="skill-item">Power BI</span><span class="skill-divider">/</span>
+                        <span class="skill-item">NLP</span><span class="skill-divider">/</span>
+                        <span class="skill-item">PostgreSQL</span><span class="skill-divider">/</span>
+                        <span class="skill-item">Pandas</span><span class="skill-divider">/</span>
+                        <span class="skill-item">Data Visualization</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <span class="section-title">Credentials</span>
+            </div>
+
+            <div class="cert-list">
+                <div class="cert-item">
+                    <span class="cert-year">2025–27</span>
+                    <div>
+                        <h3>MSc Data Science</h3>
+                        <span class="cert-issuer">Sunway University</span>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <span class="cert-year">2024</span>
+                    <div>
+                        <h3>Data Scientist Associate</h3>
+                        <span class="cert-issuer">DataCamp</span>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <span class="cert-year">2024</span>
+                    <div>
+                        <h3>Data Analyst Associate</h3>
+                        <span class="cert-issuer">DataCamp</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <footer>
-            <p>© 2024 Muzafar | Built with curiosity and data</p>
+            <p>© 2024 Muzafar · Built with curiosity and data</p>
         </footer>
     </div>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
